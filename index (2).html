@@ -1,0 +1,2026 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Barber Studio Illzach</title>
+<meta name="theme-color" content="#0E0E10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&display=swap">
+<style>
+/* Mobile-first, une colonne de 430 px max. Sombre par défaut, clair si le téléphone est en mode clair. */
+:root{
+  --bg:#0E0E10; --card:#1A1A1E; --card2:#24242A; --line:#323238;
+  --fg:#F2F0EA; --muted:#A8A49A; --gold:#D8B25A; --gold-ink:#0E0E10; --gold-soft:rgba(216,178,90,.13);
+  --ok:#6CC28A; --warn:#E6A93E; --bad:#E7695C; --scrim:rgba(0,0,0,.62);
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-title:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --r:16px; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#F3F1EB; --card:#FFFFFF; --card2:#ECE8DE; --line:#DAD4C6;
+    --fg:#17161A; --muted:#67625A; --gold:#9A7120; --gold-ink:#FFFFFF; --gold-soft:rgba(154,113,32,.11);
+    --ok:#23804D; --warn:#A76A0E; --bad:#BF3A2C; --scrim:rgba(20,18,14,.45); color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F3F1EB; --card:#FFFFFF; --card2:#ECE8DE; --line:#DAD4C6;
+  --fg:#17161A; --muted:#67625A; --gold:#9A7120; --gold-ink:#FFFFFF; --gold-soft:rgba(154,113,32,.11);
+  --ok:#23804D; --warn:#A76A0E; --bad:#BF3A2C; --scrim:rgba(20,18,14,.45); color-scheme:light;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.45;margin:0;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.app{max-width:430px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--gold)}
+img{max-width:100%}
+
+/* En-tête et onglets */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);padding-block:10px 10px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--card);border-radius:14px;padding:4px}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:700 15px/1 var(--f-title);text-transform:uppercase;letter-spacing:.07em;min-height:48px;border-radius:11px;position:relative}
+.tab[aria-current="page"]{background:var(--gold);color:var(--gold-ink)}
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--bad);color:#FFFFFF;font:700 11px/1 var(--f-body);padding:0 6px;letter-spacing:0}
+.tab .badge{position:absolute;top:4px;right:6px}
+
+/* Typo */
+.h1,.h2,.h3{font-family:var(--f-title);text-transform:uppercase;margin:0;text-wrap:balance;line-height:1}
+.h1{font-size:44px;font-weight:800;letter-spacing:.005em}
+.h2{font-size:27px;font-weight:700;letter-spacing:.02em}
+.h3{font-size:19px;font-weight:700;letter-spacing:.04em}
+.lead{font-size:17px;color:var(--muted);margin:0}
+p{margin:0}
+.eyebrow{display:flex;align-items:center;gap:10px;color:var(--gold);font:600 13px/1.2 var(--f-title);text-transform:uppercase;letter-spacing:.16em}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--gold);flex:none}
+.muted{color:var(--muted)} .small{font-size:14px} .tiny{font-size:12.5px} .gold{color:var(--gold)} .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+.num{font-variant-numeric:tabular-nums}
+.pre{white-space:pre-line}
+.ta-r{text-align:right}
+.label{font:600 12.5px/1.2 var(--f-title);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+
+/* Mise en page */
+.stack{display:flex;flex-direction:column;gap:12px}
+.stack-s{display:flex;flex-direction:column;gap:6px}
+.stack-l{display:flex;flex-direction:column;gap:22px}
+.row{display:flex;gap:10px;align-items:center}
+.row.wrap{flex-wrap:wrap}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:var(--card);border-radius:var(--r);padding:16px}
+.card.line{background:transparent;border:1px solid var(--line)}
+.card.gold{background:var(--gold-soft);border:1px solid var(--gold)}
+.block{padding-block:30px 6px;display:flex;flex-direction:column;gap:16px}
+.sep{height:1px;background:var(--line);border:0;margin:4px 0}
+
+/* Boutons */
+.btn{appearance:none;border:1px solid var(--line);background:var(--card2);color:var(--fg);font:700 16px/1.1 var(--f-title);text-transform:uppercase;letter-spacing:.07em;min-height:54px;padding:0 18px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;width:100%;text-align:center}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.btn-ghost{background:transparent}
+.btn-danger{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn-sm{min-height:44px;font-size:14px;padding:0 14px;width:auto;border-radius:11px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.link{appearance:none;background:none;border:0;color:var(--gold);font-weight:600;padding:10px 0;text-decoration:underline;text-underline-offset:3px}
+.back{appearance:none;background:none;border:0;color:var(--muted);font:600 15px var(--f-title);text-transform:uppercase;letter-spacing:.08em;min-height:44px;padding:0;display:inline-flex;align-items:center;gap:6px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+/* Champs */
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>span{font-size:14px;color:var(--muted);font-weight:500}
+input,textarea,select{font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:12px;min-height:52px;padding:12px 14px;width:100%;min-width:0}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);outline:none}
+textarea{min-height:100px;resize:vertical}
+input[type=checkbox]{width:26px;height:26px;min-height:0;padding:0;accent-color:var(--gold);flex:none;margin:0}
+.check{display:flex;gap:12px;align-items:center;min-height:52px;cursor:pointer}
+.check .grow{font-weight:500}
+.toggle-row{display:flex;gap:12px;align-items:center;justify-content:space-between;min-height:52px;cursor:pointer;font-weight:600}
+
+/* Options cliquables */
+.opt{appearance:none;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--fg);border-radius:var(--r);padding:16px;display:flex;gap:12px;align-items:center;justify-content:space-between;min-height:72px}
+.opt[aria-pressed="true"]{border-color:var(--gold);background:var(--gold-soft)}
+.opt-t{font:700 20px/1.1 var(--f-title);text-transform:uppercase;letter-spacing:.03em}
+.price{font:700 23px/1 var(--f-title);color:var(--gold);white-space:nowrap}
+.chipset{display:flex;flex-wrap:wrap;gap:8px}
+.chip{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);min-height:44px;padding:0 16px;border-radius:999px;font:600 15px var(--f-body);display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+
+/* Pastilles */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font:700 11.5px/1.3 var(--f-body);text-transform:uppercase;letter-spacing:.05em;background:var(--card2);color:var(--muted);white-space:nowrap}
+.pill.ok{background:color-mix(in srgb,var(--ok) 17%,transparent);color:var(--ok)}
+.pill.warn{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+.pill.bad{background:color-mix(in srgb,var(--bad) 17%,transparent);color:var(--bad)}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+
+/* Accueil */
+.brand{display:flex;align-items:center;gap:14px;padding-block:10px 16px}
+.avatar{width:66px;height:66px;border-radius:50%;background:var(--card2);border:2px solid var(--gold);overflow:hidden;display:grid;place-items:center;font:800 30px/1 var(--f-title);color:var(--gold);flex:none}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.brand-name{font:800 30px/1 var(--f-title);text-transform:uppercase;letter-spacing:.02em}
+.brand-tag{color:var(--gold);font:600 14px/1.4 var(--f-title);letter-spacing:.24em;text-transform:uppercase}
+.carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:20px;scrollbar-width:none;background:var(--card)}
+.carousel::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;position:relative;aspect-ratio:4/5;max-width:100%;margin:0}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:48px 18px 16px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.78));color:#F2F0EA;font-weight:600;font-size:16px}
+.dots{display:flex;justify-content:center;gap:2px;padding-top:6px}
+.dots button{appearance:none;border:0;background:none;width:30px;height:30px;display:grid;place-items:center;padding:0}
+.dots button::after{content:"";width:8px;height:8px;border-radius:4px;background:var(--line);transition:width .2s}
+.dots button[aria-current="true"]::after{width:22px;background:var(--gold)}
+.hero{padding-block:22px 0;display:flex;flex-direction:column;gap:16px}
+.hero .btns{display:flex;flex-direction:column;gap:10px;padding-top:4px}
+.banner{border:1px solid var(--gold);background:var(--gold-soft);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:10px;margin-top:26px}
+.banner-k{font:800 22px/1 var(--f-title);text-transform:uppercase;color:var(--gold);letter-spacing:.03em}
+.svc-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.svc-row:last-child{border-bottom:0}
+.svc-name{font:700 21px/1.1 var(--f-title);text-transform:uppercase;letter-spacing:.02em}
+.steps-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps-list li{display:flex;gap:14px;align-items:flex-start}
+.steps-list li::before{counter-increment:s;content:counter(s);flex:none;width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);display:grid;place-items:center;font:800 20px/1 var(--f-title)}
+.perk{display:flex;flex-direction:column;gap:4px}
+.perk-v{font:800 26px/1 var(--f-title);color:var(--gold);text-transform:uppercase}
+.stars{color:var(--gold);letter-spacing:2px;white-space:nowrap}
+.stars .off{color:var(--line)}
+.review{display:flex;flex-direction:column;gap:6px}
+.about-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:var(--r);display:block}
+.notice{border-left:3px solid var(--warn);background:var(--card);padding:12px 14px;border-radius:0 12px 12px 0}
+
+/* Réservation */
+.progress{display:flex;gap:4px;padding-block:6px 4px}
+.progress i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.progress i.on{background:var(--gold)}
+.weeknav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.weeknav .btn-sm{min-width:48px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.day{appearance:none;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--fg);padding:8px 0 6px;text-align:center;min-height:70px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.day b{font:800 22px/1 var(--f-title)}
+.day .d{font:600 11px/1 var(--f-title);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.day .s{font-size:9.5px;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.02em}
+.day[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--gold-ink)}
+.day[aria-pressed="true"] .d,.day[aria-pressed="true"] .s{color:var(--gold-ink)}
+.day:disabled{opacity:.38}
+.day.full .s{color:var(--bad)}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.slot{appearance:none;min-height:50px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:600 16px var(--f-body);font-variant-numeric:tabular-nums}
+.slot.taken{text-decoration:line-through;color:var(--muted);opacity:.5;background:transparent}
+.slot[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.upload{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:2px dashed var(--line);border-radius:var(--r);min-height:150px;padding:16px;text-align:center;cursor:pointer;color:var(--muted)}
+.upload b{color:var(--fg);font:700 18px var(--f-title);text-transform:uppercase;letter-spacing:.05em}
+.upload input{position:absolute;width:1px;height:1px;opacity:0}
+.thumb{width:100%;max-height:320px;object-fit:cover;border-radius:var(--r);display:block}
+.thumb-s{width:64px;height:64px;object-fit:cover;border-radius:10px;flex:none}
+.lines{display:flex;flex-direction:column;gap:6px}
+.lines .row{justify-content:space-between}
+.total{font:800 30px/1 var(--f-title);color:var(--gold)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+.kv dt{color:var(--muted);font-size:14px}
+.kv dd{margin:0;font-weight:600;min-width:0;overflow-wrap:anywhere}
+.big-check{width:76px;height:76px;border-radius:50%;background:var(--gold);color:var(--gold-ink);display:grid;place-items:center;font:800 40px/1 var(--f-title);margin:8px auto 0}
+
+/* Mon espace */
+.subtabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.subtabs button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--fg);min-height:48px;border-radius:12px;font:700 15px var(--f-title);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;justify-content:center;gap:8px}
+.subtabs button[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.appt{appearance:none;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);color:var(--fg);border-radius:14px;padding:14px;display:flex;gap:14px;align-items:center}
+.appt-date{flex:none;width:58px;text-align:center;border-right:1px solid var(--line);padding-right:12px}
+.appt-date b{display:block;font:800 26px/1 var(--f-title)}
+.appt-date span{font:600 12px/1.2 var(--f-title);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stamps{display:grid;gap:8px}
+.stamp{aspect-ratio:1;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font:800 14px/1 var(--f-title);color:var(--muted)}
+.stamp.on{background:var(--gold);border:2px solid var(--gold);color:var(--gold-ink)}
+.stamp.gift{border:2px solid var(--gold);color:var(--gold);font-size:12px}
+.code{font:800 30px/1 var(--f-title);letter-spacing:.12em;color:var(--gold);user-select:all}
+.rate{display:flex;gap:4px}
+.rate button{appearance:none;background:none;border:0;font-size:38px;line-height:1;color:var(--line);padding:2px;min-width:44px;min-height:48px}
+.rate button.on{color:var(--gold)}
+.thread{display:flex;flex-direction:column;gap:8px}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px 16px 16px 4px;background:var(--card2);align-self:flex-start;overflow-wrap:anywhere}
+.msg.me{align-self:flex-end;background:var(--gold);color:var(--gold-ink);border-radius:16px 16px 4px 16px}
+.msg .tiny{opacity:.72;margin-top:4px}
+.msg.sys{align-self:center;background:transparent;border:1px dashed var(--line);color:var(--muted);font-size:14px;text-align:center;border-radius:12px}
+.composer{position:sticky;bottom:0;background:var(--bg);padding-block:10px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;align-items:flex-end}
+.composer textarea{min-height:52px;height:52px}
+.composer .btn{width:auto;flex:none}
+
+/* Espace coiffeur */
+.chips-scroll{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.chips-scroll::-webkit-scrollbar{display:none}
+.bchip{appearance:none;flex:none;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:700 14px var(--f-title);text-transform:uppercase;letter-spacing:.06em;display:inline-flex;align-items:center;gap:6px}
+.bchip[aria-current="page"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.list{display:flex;flex-direction:column}
+.li{appearance:none;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:var(--fg);padding:14px 0;display:flex;gap:12px;align-items:center;min-height:60px}
+.li:last-child{border-bottom:0}
+.li-t{font-weight:700}
+.li .time{font:800 22px/1 var(--f-title);width:58px;flex:none;font-variant-numeric:tabular-nums}
+.daytitle{font:700 15px var(--f-title);text-transform:uppercase;letter-spacing:.1em;color:var(--gold);padding-top:14px}
+.stat{background:var(--card);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.stat b{font:800 26px/1 var(--f-title);font-variant-numeric:tabular-nums}
+.bar{height:10px;background:var(--card2);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:5px}
+.pin-dots{display:flex;justify-content:center;gap:16px;padding:18px 0}
+.pin-dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--gold)}
+.pin-dots i.on{background:var(--gold)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.key{appearance:none;min-height:66px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--fg);font:700 28px/1 var(--f-title)}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.ed-slide{display:flex;gap:12px;align-items:flex-start}
+.ed-slide img{width:76px;height:95px;object-fit:cover;border-radius:10px;flex:none}
+.timepair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proof{width:100%;max-height:340px;object-fit:contain;background:var(--bg);border-radius:12px}
+details.card>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:32px}
+details.card>summary::-webkit-details-marker{display:none}
+details.card>summary::after{content:"+";font:700 24px/1 var(--f-title);color:var(--gold)}
+details.card[open]>summary::after{content:"–"}
+details.card[open]>summary{margin-bottom:14px}
+
+/* Fenêtre et toast */
+#modal{position:fixed;inset:0;z-index:50;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--card);width:100%;max-width:430px;max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding-top:20px;padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:-6px auto 2px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--fg);color:var(--bg);padding:13px 18px;border-radius:14px;font-weight:600;z-index:60;max-width:calc(100% - 32px);width:max-content;text-align:center;transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:var(--bad);color:#FFFFFF}
+#ts-box{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70}
+#ts-box:empty{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="top" id="top"></header>
+  <main id="view"></main>
+</div>
+<div id="modal" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="ts-box"></div>
+<!-- config.js : adresse du projet Supabase, clé publique (anon) et clé de site Turnstile. Généré depuis .env, jamais de clé secrète. -->
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script>
+'use strict';
+/* ===================== Données ===================== */
+const DAYS = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const DAYS_S = ['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+const MONTHS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const MONTHS_L = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+function defaults(){
+  return {
+    v: 1,
+    settings: {
+      phone: '', instagram: '',
+      modes: { salon: true, domicile: true },
+      salon: { street: '', zip: '68110', city: 'Illzach', info: '', validated: false },
+      services: [
+        { id: 'coupe', name: 'Coupe', price: 15, student: 12, duration: 30, active: true },
+        { id: 'coupe-barbe', name: 'Coupe + barbe', price: 20, student: 17, duration: 45, active: true },
+        { id: 'barbe', name: 'Barbe', price: 8, student: 6, duration: 20, active: true }
+      ],
+      travel: { near: 5, far: 8, threshold: 20, maxKm: 30, buffer: 15 },
+      loyalty: { on: true, every: 5, pct: 50 },
+      referral: { on: true, needed: 2, pct: 30 },
+      sub: { on: true, months: 5, discount: 1.5, freqs: [1, 2, 3] },
+      cancelHours: 24,
+      payments: [
+        { name: 'Espèces', on: true }, { name: 'Carte bancaire', on: true },
+        { name: 'Lydia / Wero', on: true }, { name: 'Virement', on: false }
+      ],
+      step: 30, minNoticeH: 2, aheadWeeks: 8,
+      days: {
+        0: { open: false, start: '10:00', end: '14:00' },
+        1: { open: true, start: '09:00', end: '19:00' },
+        2: { open: true, start: '09:00', end: '19:00' },
+        3: { open: true, start: '09:00', end: '19:00' },
+        4: { open: true, start: '09:00', end: '19:00' },
+        5: { open: true, start: '09:00', end: '20:00' },
+        6: { open: true, start: '09:00', end: '17:00' }
+      },
+      closed: [],
+      locked: false,
+      lockMsg: 'Les réservations sont en pause pour le moment. Écris-moi si tu as besoin d\'un créneau.'
+    },
+    home: {
+      name: 'Mohamed', tagline: 'Barber studio', logo: null,
+      slides: [
+        { img: null, caption: 'Dégradé à blanc, finitions au rasoir' },
+        { img: null, caption: 'Taille de barbe et contours nets' },
+        { img: null, caption: 'Au salon à Illzach ou chez toi' }
+      ],
+      eyebrow: 'Coiffure homme · Illzach 68110',
+      title: 'Ta coupe, chez toi ou au salon',
+      intro: 'Dégradés, coupes classiques et barbe. Je viens chez toi autour d\'Illzach ou je te reçois au salon. Tu choisis ton créneau en une minute.',
+      cta: 'Prendre rendez-vous', cta2: 'Découvrir',
+      about: { on: true, title: 'Qui suis-je', photo: null,
+        text: 'Coiffeur passionné, je me suis spécialisé dans la coupe homme : dégradés, contours, barbe.\nJe prends le temps d\'écouter ce que tu veux et je te conseille selon ta tête et ton style.' },
+      services: { on: true, title: 'Prestations et prix', note: 'Prix étudiant avec un compte client et un justificatif validé.' },
+      how: { on: true, title: 'Comment ça marche', steps: [
+        { t: 'Choisis ta prestation', d: 'Coupe, barbe ou les deux, au salon ou à domicile.' },
+        { t: 'Réserve ton créneau', d: 'Les horaires libres s\'affichent en direct.' },
+        { t: 'Installe-toi', d: 'Je m\'occupe du reste. Tu paies sur place.' }
+      ] },
+      perks: { on: true, title: 'Avantages' },
+      quick: { on: true, title: 'Accès rapide' },
+      student: { on: true, text: 'Tu es étudiant ? Envoie ton justificatif depuis Mon espace : dès que je le valide, tes prix baissent automatiquement.' },
+      reviews: { on: true, title: 'Ils en parlent' }
+    },
+    clients: [], appts: [], subs: [], waitlist: [], reviews: [], messages: [],
+    templates: [
+      'Salut {prenom}, petit rappel : ton rdv est demain. À demain !',
+      'Salut {prenom}, un créneau s\'est libéré. Tu le veux ?',
+      'Merci pour ta visite {prenom} ! Si tu as une minute, laisse-moi un avis dans Mon espace.',
+      'Salut {prenom}, je suis en retard d\'environ 10 minutes, désolé.'
+    ],
+    demo: false
+  };
+}
+
+function fill(def, obj){
+  if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) return obj === undefined ? def : obj;
+  for (const k in def){
+    if (!(k in obj)) obj[k] = def[k];
+    else if (def[k] && typeof def[k] === 'object' && !Array.isArray(def[k])) obj[k] = fill(def[k], obj[k]);
+  }
+  return obj;
+}
+
+/* ===================== Supabase ===================== */
+// Seules la clé publique (anon) et la clé de site Turnstile sont ici. La clé secrète
+// ne quitte jamais le serveur : la sécurité repose sur les règles RLS de la base.
+const CFG = window.BARBER_CONFIG || {};
+const sb = window.supabase && CFG.supabaseUrl && CFG.supabaseAnonKey
+  ? window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey) : null;
+let db, authUser = null, isAdmin = false, busySlots = [], busyP = null;
+function setAuth(session){ authUser = session?.user || null; isAdmin = authUser?.app_metadata?.role === 'admin'; }
+const appUrl = () => location.origin + location.pathname;
+
+// Conversion entre les objets de l'appli et les lignes des tables.
+const iso = v => v ? new Date(v).toISOString() : (v ?? null);
+const hhmm = t => String(t || '').slice(0, 5);
+function studentFrom(r){
+  const st = { status: r.etudiant_statut || 'none' };
+  if (r.etudiant_justificatif) st.proof = r.etudiant_justificatif;
+  if (r.etudiant_motif) st.reason = r.etudiant_motif;
+  if (r.etudiant_date) st.date = iso(r.etudiant_date);
+  return st;
+}
+const MAP = {
+  clients: { t: 'clients',
+    from: r => ({ id: r.id, userId: r.user_id, first: r.prenom, last: r.nom, phone: r.telephone, email: r.email, hasAccount: !!r.user_id || !!r.demo_compte,
+      refCode: r.code_parrain, refUsed: r.parrainages_utilises, student: studentFrom(r), notes: '', addresses: r.adresses || [],
+      createdAt: iso(r.cree_le), accountAt: iso(r.compte_cree_le), demo: r.demo }),
+    to: c => ({ id: c.id, user_id: c.userId || null, prenom: c.first || '', nom: c.last || '', telephone: normPhone(c.phone), email: c.email || null,
+      code_parrain: c.refCode || null, parrainages_utilises: c.refUsed || 0, etudiant_statut: c.student?.status || 'none',
+      etudiant_motif: c.student?.reason || null, etudiant_justificatif: c.student?.proof || null, etudiant_date: c.student?.date || null,
+      adresses: c.addresses || [], cree_le: c.createdAt || new Date().toISOString(), compte_cree_le: c.accountAt || null,
+      demo: !!c.demo, demo_compte: !!c.demo && !c.userId && !!c.hasAccount }) },
+  notes: { t: 'clients_notes', key: 'client_id',
+    list: () => db.clients.map(c => ({ id: c.id, notes: c.notes || '' })),
+    to: x => ({ client_id: x.id, notes: x.notes }) },
+  subs: { t: 'abonnements',
+    from: r => ({ id: r.id, clientId: r.client_id, serviceId: r.prestation_id, mode: r.lieu, freq: r.frequence, start: r.debut, end: r.fin,
+      time: hhmm(r.heure), status: r.statut, at: iso(r.cree_le) }),
+    to: x => ({ id: x.id, client_id: x.clientId, prestation_id: x.serviceId, lieu: x.mode, frequence: x.freq, debut: x.start, fin: x.end,
+      heure: x.time, statut: x.status, cree_le: x.at || new Date().toISOString() }) },
+  appts: { t: 'rdv',
+    from: r => ({ id: r.id, clientId: r.client_id, serviceId: r.prestation_id, serviceName: r.prestation_nom, duration: r.duree, mode: r.lieu,
+      address: r.adresse, km: r.km, date: r.date, time: hhmm(r.heure), photo: r.photo, detail: r.detail, subId: r.abonnement_id,
+      refCode: r.code_parrain, payment: r.paiement, price: r.prix, usedRef: r.parrainage_utilise, override: r.prix_impose, status: r.statut,
+      seen: r.vu, byBarber: r.par_coiffeur, cancelledBy: r.annule_par, cancelledAt: iso(r.annule_le), createdAt: iso(r.cree_le), demo: r.demo }),
+    to: a => ({ id: a.id, client_id: a.clientId, prestation_id: a.serviceId, prestation_nom: a.serviceName, duree: a.duration, lieu: a.mode,
+      adresse: a.address || null, km: a.km == null ? null : Math.round(a.km), date: a.date, heure: a.time, photo: a.photo || null, detail: a.detail || '',
+      abonnement_id: a.subId || null, code_parrain: a.refCode || null, paiement: a.payment || '', prix: a.price || {}, parrainage_utilise: !!a.usedRef,
+      prix_impose: a.override === '' || a.override == null ? null : Number(a.override), statut: a.status, vu: !!a.seen, par_coiffeur: !!a.byBarber,
+      annule_par: a.cancelledBy || null, annule_le: a.cancelledAt || null, cree_le: a.createdAt || new Date().toISOString(), demo: !!a.demo }) },
+  messages: { t: 'messages',
+    from: r => ({ id: r.id, clientId: r.client_id, from: r.auteur, text: r.texte, at: iso(r.envoye_le), readBarber: r.lu_coiffeur, readClient: r.lu_client,
+      auto: r.auto, kind: r.type, apptId: r.rdv_id, handled: r.traite, demo: r.demo }),
+    to: m => ({ id: m.id, client_id: m.clientId, auteur: m.from, texte: m.text, envoye_le: m.at, lu_coiffeur: !!m.readBarber, lu_client: !!m.readClient,
+      auto: !!m.auto, type: m.kind || null, rdv_id: m.apptId || null, traite: !!m.handled, demo: !!m.demo }) },
+  reviews: { t: 'avis',
+    from: r => ({ id: r.id, clientId: r.client_id, name: r.nom, stars: r.note, text: r.texte, public: r.public, hidden: r.masque, at: iso(r.cree_le), demo: r.demo }),
+    to: r => ({ id: r.id, client_id: r.clientId || null, nom: r.name || '', note: r.stars, texte: r.text, public: !!r.public, masque: !!r.hidden,
+      cree_le: r.at, demo: !!r.demo }) },
+  waitlist: { t: 'liste_attente',
+    from: r => ({ id: r.id, clientId: r.client_id, date: r.date, serviceId: r.prestation_id, at: iso(r.cree_le), status: r.statut, freed: r.place_liberee, demo: r.demo }),
+    to: w => ({ id: w.id, client_id: w.clientId, date: w.date, prestation_id: w.serviceId, cree_le: w.at, statut: w.status, place_liberee: !!w.freed, demo: !!w.demo }) }
+};
+const ORDER = ['clients', 'notes', 'subs', 'appts', 'messages', 'reviews', 'waitlist'];
+const rowsOf = n => (MAP[n].list ? MAP[n].list() : db[n]).map(MAP[n].to);
+const keyOf = (n, r) => r[MAP[n].key || 'id'];
+const reglagesRow = () => ({ id: 1, reglages: db.settings, modeles: db.templates, demo: !!db.demo });
+
+async function fetchAll(table){
+  const out = [];
+  for (let from = 0; ; from += 1000){
+    const { data, error } = await sb.from(table).select('*').range(from, from + 999);
+    if (error) throw error;
+    out.push(...data);
+    if (data.length < 1000) return out;
+  }
+}
+async function rpc(fn, args){
+  const { data, error } = await sb.rpc(fn, args);
+  if (error) throw new Error(error.code === 'P0001' ? error.message : 'Connexion impossible. Réessaie.');
+  return data;
+}
+
+// Charge ce que la personne a le droit de voir : tout pour l'admin, ses données pour
+// un client, seulement la vitrine pour un visiteur. Les règles RLS filtrent côté serveur.
+// soft : rechargement en direct, abandonné si une modification a eu lieu entre-temps.
+async function load(soft){
+  const d = defaults(), seq = editSeq;
+  await sb.rpc('terminer_rdv_passes');
+  const { data: hp } = await sb.from('page_accueil').select('contenu').eq('id', 1).maybeSingle();
+  d.home = fill(defaults().home, hp?.contenu || {});
+  if (isAdmin){
+    const { data: rg, error } = await sb.from('reglages').select('*').eq('id', 1).single();
+    if (error) throw error;
+    d.settings = fill(defaults().settings, rg.reglages); d.templates = rg.modeles || []; d.demo = !!rg.demo;
+    const [cl, no, su, ap, me_, rv, wl] = await Promise.all(['clients', 'clients_notes', 'abonnements', 'rdv', 'messages', 'avis', 'liste_attente'].map(fetchAll));
+    const notes = new Map(no.map(x => [x.client_id, x.notes]));
+    d.clients = cl.map(MAP.clients.from); d.clients.forEach(c => { c.notes = notes.get(c.id) || ''; });
+    d.subs = su.map(MAP.subs.from); d.appts = ap.map(MAP.appts.from); d.messages = me_.map(MAP.messages.from);
+    d.reviews = rv.map(MAP.reviews.from); d.waitlist = wl.map(MAP.waitlist.from);
+  } else {
+    const cfg = await rpc('config_publique');
+    d.settings = fill(defaults().settings, cfg?.settings || {}); d.demo = !!cfg?.demo;
+    const pubs = (await rpc('avis_publics')) || [];
+    d.reviews = pubs.map(r => ({ id: r.id, clientId: null, name: r.nom, stars: r.note, text: r.texte, public: true, hidden: false, at: iso(r.cree_le) }));
+    if (authUser){
+      const [cl, su, ap, me_, rv, wl] = await Promise.all(['clients', 'abonnements', 'rdv', 'messages', 'avis', 'liste_attente'].map(fetchAll));
+      d.clients = cl.map(MAP.clients.from);
+      if (d.clients[0]) d.clients[0].refFriends = (await rpc('mes_parrainages')) || 0;
+      d.subs = su.map(MAP.subs.from); d.appts = ap.map(MAP.appts.from); d.messages = me_.map(MAP.messages.from); d.waitlist = wl.map(MAP.waitlist.from);
+      const mine = rv.map(MAP.reviews.from), ids = new Set(mine.map(r => r.id));
+      d.reviews = d.reviews.filter(r => !ids.has(r.id)).concat(mine);
+    }
+  }
+  if (soft && (seq !== editSeq || saving || saveT)) return false;
+  db = d;
+  takeSnapshot();
+  await prefetchImages();
+  return true;
+}
+
+// Enregistrement (compte admin) : on compare avec le dernier état connu du serveur
+// et on n'envoie que les lignes ajoutées, modifiées ou supprimées.
+let snap = null, saveT = null, saving = false, saveAgain = false, saveWarned = false, editSeq = 0;
+function takeSnapshot(){
+  snap = {};
+  for (const n of ORDER) snap[n] = new Map(rowsOf(n).map(r => [keyOf(n, r), JSON.stringify(r)]));
+  snap.reglages = JSON.stringify(reglagesRow()); snap.home = JSON.stringify(db.home);
+}
+function save(){
+  if (!isAdmin || !snap) return true;
+  editSeq++;
+  clearTimeout(saveT); saveT = setTimeout(flush, 300);
+  return true;
+}
+async function flush(){
+  clearTimeout(saveT); saveT = null;
+  if (!isAdmin || !snap) return;
+  if (saving){ saveAgain = true; return; }
+  saving = true;
+  try {
+    const cur = {};
+    for (const n of ORDER) cur[n] = new Map(rowsOf(n).map(r => [keyOf(n, r), r]));
+    // Suppressions d'abord (une sauvegarde restaurée peut réutiliser un code parrainage), puis ajouts et modifications.
+    for (const n of ORDER.slice().reverse()){
+      const del = [...snap[n].keys()].filter(k => !cur[n].has(k));
+      for (let i = 0; i < del.length; i += 200){ const { error } = await sb.from(MAP[n].t).delete().in(MAP[n].key || 'id', del.slice(i, i + 200)); if (error) throw error; }
+      del.forEach(k => snap[n].delete(k));
+    }
+    for (const n of ORDER){
+      const up = [...cur[n].entries()].filter(([k, r]) => snap[n].get(k) !== JSON.stringify(r)).map(([, r]) => r);
+      for (let i = 0; i < up.length; i += 500){ const { error } = await sb.from(MAP[n].t).upsert(up.slice(i, i + 500)); if (error) throw error; }
+      up.forEach(r => snap[n].set(keyOf(n, r), JSON.stringify(r)));
+    }
+    const rg = reglagesRow(), rj = JSON.stringify(rg);
+    if (rj !== snap.reglages){ const { error } = await sb.from('reglages').upsert(rg); if (error) throw error; snap.reglages = rj; }
+    const hj = JSON.stringify(db.home);
+    if (hj !== snap.home){ const { error } = await sb.from('page_accueil').upsert({ id: 1, contenu: db.home }); if (error) throw error; snap.home = hj; }
+    saveWarned = false;
+  } catch (e) {
+    console.error(e);
+    if (!saveWarned) toast('Enregistrement impossible : vérifie ta connexion.', 'bad');
+    saveWarned = true;
+  } finally {
+    saving = false;
+    if (saveAgain){ saveAgain = false; flush(); }
+  }
+}
+
+// Mise à jour en direct : nouvelle réservation, nouveau message…
+let channel = null, liveT = null;
+function subscribeLive(){
+  if (!sb) return;
+  if (channel) sb.removeChannel(channel);
+  channel = sb.channel('bs-' + (authUser?.id || 'public'));
+  ['clients', 'clients_notes', 'abonnements', 'rdv', 'messages', 'avis', 'liste_attente', 'reglages', 'page_accueil']
+    .forEach(t => channel.on('postgres_changes', { event: '*', schema: 'public', table: t }, onLive));
+  channel.subscribe();
+}
+function onLive(){ clearTimeout(liveT); liveT = setTimeout(refresh, 700); }
+async function refresh(){
+  if (saving || saveT){ liveT = setTimeout(refresh, 1000); return; }
+  try { if (!await load(true)){ liveT = setTimeout(refresh, 1000); return; } } catch (e) { return; }
+  autoComplete();
+  const active = document.activeElement;
+  if (!active || !/INPUT|TEXTAREA|SELECT/.test(active.tagName)) render();
+}
+async function loadBusy(){
+  if (isAdmin) return;
+  const s = db.settings, from = today();
+  const to = addDays(from, (Number(s.aheadWeeks) || 8) * 7 + 7 + (s.sub.on ? Math.ceil((Number(s.sub.months) || 0) * 31) : 0));
+  const { data, error } = await sb.rpc('creneaux_occupes', { p_du: from, p_au: to });
+  if (!error) busySlots = (data || []).map(r => ({ id: null, date: r.date, time: r.heure, duration: r.duree, mode: r.lieu }));
+}
+
+// Photos privées (coupes, justificatifs) : liens temporaires signés, valables 1 h.
+let signed = {}, signedAt = 0;
+const isUrl = p => /^(data:|https?:)/.test(String(p || ''));
+function imgSrc(bucket, path){ if (!path) return ''; if (isUrl(path)) return path; return signed[bucket + '/' + path] || placeholder(0, 'PHOTO'); }
+async function prefetchImages(){
+  if (Date.now() - signedAt > 45 * 60000){ signed = {}; signedAt = Date.now(); }
+  const need = { coupes: new Set(), justificatifs: new Set() };
+  db.appts.forEach(a => { if (a.photo && !isUrl(a.photo)) need.coupes.add(a.photo); });
+  db.clients.forEach(c => { const p = c.student?.proof; if (p && !isUrl(p)) need.justificatifs.add(p); });
+  for (const [b, set] of Object.entries(need)){
+    const paths = [...set].filter(p => !signed[b + '/' + p]);
+    if (!paths.length) continue;
+    const { data } = await sb.storage.from(b).createSignedUrls(paths, 3600);
+    (data || []).forEach(x => { if (x.signedUrl) signed[b + '/' + x.path] = x.signedUrl; });
+  }
+}
+// Supprime des fichiers privés (justificatif validé ou refusé, fiche ou rdv supprimés).
+function dropFiles(bucket, paths){ paths = paths.filter(p => p && !isUrl(p)); if (paths.length && sb) sb.storage.from(bucket).remove(paths).then(() => {}, () => {}); }
+async function dataUrlBlob(u){ return (await fetch(u)).blob(); }
+async function uploadImage(bucket, path, dataUrl){
+  const { error } = await sb.storage.from(bucket).upload(path, await dataUrlBlob(dataUrl), { contentType: 'image/jpeg' });
+  if (error) throw error;
+  return path;
+}
+
+// Cloudflare Turnstile : un jeton neuf (à usage unique) à chaque envoi sensible.
+// Invisible la plupart du temps ; s'affiche seulement si Cloudflare a un doute.
+let tsId = null;
+function turnstileToken(){
+  return new Promise((res, rej) => {
+    let tries = 0;
+    const go = () => {
+      if (!window.turnstile){ if (++tries > 50) return rej(new Error('turnstile')); return setTimeout(go, 200); }
+      if (tsId !== null){ try { turnstile.remove(tsId); } catch (e) {} tsId = null; }
+      const box = $('#ts-box'); box.innerHTML = '';
+      const t = setTimeout(() => rej(new Error('turnstile')), 120000);
+      tsId = turnstile.render(box, { sitekey: CFG.turnstileSiteKey, appearance: 'interaction-only', language: 'fr',
+        callback: tok => { clearTimeout(t); res(tok); setTimeout(() => { box.innerHTML = ''; }, 0); },
+        'error-callback': () => { clearTimeout(t); rej(new Error('turnstile')); } });
+    };
+    go();
+  });
+}
+async function captcha(){
+  try { return await turnstileToken(); }
+  catch (e) { throw new Error('Vérification anti-robot impossible. Recharge la page.'); }
+}
+// Réservation, contact et liste d'attente des visiteurs : via l'Edge Function, qui vérifie Turnstile.
+async function callEdge(action, payload){
+  const turnstile = await captcha();
+  const { data, error } = await sb.functions.invoke('reservation', { body: { action, turnstile, ...payload } });
+  if (error){ let m = ''; try { m = (await error.context.json()).error; } catch (e) {} throw new Error(m || 'Connexion impossible. Réessaie.'); }
+  if (data && data.error) throw new Error(data.error);
+  return data;
+}
+function authError(error){
+  const c = error?.code || '';
+  if (c === 'email_not_confirmed') return 'Confirme d\'abord ton e-mail (clique sur le lien reçu).';
+  if (c === 'invalid_credentials') return 'E-mail ou mot de passe incorrect.';
+  if (c === 'user_already_exists' || c === 'email_exists') return 'Un compte existe déjà avec cet e-mail. Connecte-toi ou utilise « Mot de passe oublié ».';
+  if (c === 'weak_password') return 'Mot de passe trop faible : 8 caractères minimum, mélange lettres et chiffres.';
+  if (c === 'over_request_rate_limit' || c === 'over_email_send_rate_limit') return 'Trop d\'essais. Attends quelques minutes.';
+  if (c.startsWith('captcha')) return 'Vérification anti-robot échouée. Réessaie.';
+  return 'Ça n\'a pas marché. Vérifie tes infos et réessaie.';
+}
+async function signIn(email, password){
+  const captchaToken = await captcha();
+  const { data, error } = await sb.auth.signInWithPassword({ email, password, options: { captchaToken } });
+  if (error) throw new Error(authError(error));
+  setAuth(data.session); await load(); subscribeLive();
+}
+async function signUp(email, password, first, last, phone){
+  const captchaToken = await captcha();
+  const { data, error } = await sb.auth.signUp({ email, password,
+    options: { captchaToken, emailRedirectTo: appUrl(), data: { first: first.trim(), last: last.trim(), phone: normPhone(phone) } } });
+  if (error) throw new Error(authError(error));
+  if (data.session){ setAuth(data.session); await load(); subscribeLive(); }
+  return data;
+}
+async function sendReset(email){
+  const captchaToken = await captcha();
+  const { error } = await sb.auth.resetPasswordForEmail(email, { captchaToken, redirectTo: appUrl() });
+  if (error) throw new Error(authError(error));
+}
+const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+
+/* ===================== Outils ===================== */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => crypto.randomUUID();
+const round = n => Math.round(n * 100) / 100;
+const sum = arr => round(arr.reduce((a, b) => a + (Number(b) || 0), 0));
+function eur(n){ n = round(Number(n) || 0); const s = Number.isInteger(n) ? String(n) : n.toFixed(2).replace('.', ','); return s.replace('-', '−') + ' €'; }
+const pad = n => String(n).padStart(2, '0');
+const ds = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const today = () => ds(new Date());
+function parseD(s){ const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); }
+function addDays(s, n){ const d = parseD(s); d.setDate(d.getDate() + n); return ds(d); }
+function addMonths(s, n){ const d = parseD(s); d.setMonth(d.getMonth() + n); return ds(d); }
+const mins = t => { const [h, m] = String(t).split(':').map(Number); return h * 60 + (m || 0); };
+const hm = m => pad(Math.floor(m / 60)) + ':' + pad(m % 60);
+function dt(date, time){ const d = parseD(date); const m = mins(time); d.setHours(Math.floor(m / 60), m % 60, 0, 0); return d; }
+function dayShort(s){ const d = parseD(s); return DAYS_S[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()]; }
+function dayLong(s){ const d = parseD(s); return DAYS[d.getDay()].toLowerCase() + ' ' + d.getDate() + ' ' + MONTHS_L[d.getMonth()]; }
+const hTime = t => String(t || '').replace(':', 'h');
+function normPhone(p){ let d = String(p || '').replace(/\D/g, ''); if (d.startsWith('33') && d.length === 11) d = '0' + d.slice(2); return d; }
+function fmtPhone(p){ const d = normPhone(p); return d.length === 10 ? d.replace(/(\d{2})(?=\d)/g, '$1 ') : d; }
+const slug = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+function getPath(o, p){ return p.split('.').reduce((a, k) => a == null ? a : a[k], o); }
+function setPath(o, p, v){ const ks = p.split('.'); const last = ks.pop(); const t = ks.reduce((a, k) => a[k] ?? (a[k] = {}), o); t[last] = v; }
+function ago(iso){ const d = new Date(iso); const s = (Date.now() - d) / 1000; if (s < 60) return 'à l\'instant'; if (s < 3600) return 'il y a ' + Math.floor(s / 60) + ' min'; if (s < 86400) return 'il y a ' + Math.floor(s / 3600) + ' h'; return dayShort(ds(d)); }
+function stars(n){ n = Math.round(n); return '<span class="stars" aria-label="' + n + ' sur 5">' + '★'.repeat(n) + '<span class="off">' + '★'.repeat(5 - n) + '</span></span>'; }
+const fr1 = n => String(round(n)).replace('.', ',');
+
+function placeholder(i, label){
+  const pals = [['#2B2416', '#0E0E10'], ['#1C1F24', '#0E0E10'], ['#2A1C18', '#0E0E10'], ['#1E2420', '#0E0E10']];
+  const [a, b] = pals[i % 4]; const r = [-18, 12, -6, 20][i % 4];
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 500'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${a}'/><stop offset='1' stop-color='${b}'/></linearGradient></defs><rect width='400' height='500' fill='url(#g)'/><g transform='rotate(${r} 200 220)' fill='none' stroke='#D8B25A' stroke-width='5' stroke-linecap='round' opacity='.75'><circle cx='170' cy='290' r='26'/><circle cx='230' cy='290' r='26'/><path d='M184 268 L252 140 M216 268 L148 140'/></g><text x='200' y='400' text-anchor='middle' fill='#D8B25A' font-family='Arial Narrow,Arial,sans-serif' font-size='17' font-weight='700' letter-spacing='5'>${label || 'TA PHOTO ICI'}</text></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+function readImage(file, max = 1000, q = 0.72){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const sc = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/jpeg', q));
+      };
+      img.onerror = rej; img.src = fr.result;
+    };
+    fr.onerror = rej; fr.readAsDataURL(file);
+  });
+}
+
+/* ===================== Clients et comptes ===================== */
+const cById = id => db.clients.find(c => c.id === id);
+const cByPhone = p => { p = normPhone(p); return p ? db.clients.find(c => c.phone === p) : null; };
+const cName = c => c ? ((c.first || '') + ' ' + (c.last || '')).trim() || 'Client' : 'Client supprimé';
+function me(){ return authUser && db ? db.clients.find(c => c.userId === authUser.id) || null : null; }
+function newClient(first, last, phone){
+  const c = { id: uid(), userId: null, email: null, first: String(first || '').trim(), last: String(last || '').trim(), phone: normPhone(phone), hasAccount: false,
+    refCode: null, refUsed: 0, student: { status: 'none' }, notes: '', addresses: [], createdAt: new Date().toISOString() };
+  db.clients.push(c); return c;
+}
+function findOrCreate(first, last, phone){
+  let c = cByPhone(phone);
+  if (!c) c = newClient(first, last, phone);
+  else if (!c.hasAccount){ if (first) c.first = first.trim(); if (last) c.last = last.trim(); }
+  return c;
+}
+const studentOK = c => !!(c && c.hasAccount && c.student && c.student.status === 'ok');
+
+/* ===================== Prestations, distance, créneaux ===================== */
+const svc = id => db.settings.services.find(s => s.id === id);
+const activeServices = () => db.settings.services.filter(s => s.active);
+function onlyMode(){ const m = db.settings.modes; if (m.salon && !m.domicile) return 'salon'; if (!m.salon && m.domicile) return 'domicile'; if (!m.salon && !m.domicile) return 'salon'; return null; }
+const modeLabel = m => m === 'domicile' ? 'À domicile' : 'Au salon';
+
+// Distance routière approximative depuis Illzach (68110), par code postal.
+const ZIP_KM = { '68110':0,'68390':5,'68260':5,'68100':5,'68200':6,'68270':7,'68400':7,'68170':8,'68120':8,'68350':10,'68460':10,'68540':16,
+  '68440':11,'68990':13,'68790':12,'68840':12,'68950':14,'68310':15,'68720':15,'68190':16,'68490':18,'68520':18,'68700':21,'68360':22,
+  '68680':22,'68130':23,'68500':25,'68800':26,'68730':28,'68560':28,'68210':30,'68300':30,'68220':32,'68610':28,'68000':42,'68180':44,'68920':40 };
+function estimateKm(zip){
+  zip = String(zip || '').trim(); if (!/^\d{5}$/.test(zip)) return null;
+  if (zip in ZIP_KM) return { km: ZIP_KM[zip], sure: true };
+  const m = { '68': 30, '90': 50, '67': 90, '25': 90, '70': 80, '88': 90 };
+  return { km: m[zip.slice(0, 2)] ?? 999, sure: false };
+}
+const travelFee = km => km <= db.settings.travel.threshold ? Number(db.settings.travel.near) : Number(db.settings.travel.far);
+const addrStr = a => a ? [a.street, ((a.zip || '') + ' ' + (a.city || '')).trim()].filter(Boolean).join(', ') : '';
+const salonStr = () => db.settings.salon.validated ? addrStr(db.settings.salon) : '';
+const mapsUrl = addr => 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(addr);
+
+function dayConf(date){
+  const c = db.settings.days[parseD(date).getDay()];
+  if (!c || !c.open || db.settings.closed.includes(date)) return null;
+  return c;
+}
+function slotsFor(date, dur, mode, exclude = []){
+  const c = dayConf(date); if (!c) return null;
+  const s = db.settings, buf = Number(s.travel.buffer) || 0, limit = Date.now() + (Number(s.minNoticeH) || 0) * 3600000;
+  const src = isAdmin ? db.appts.filter(a => a.date === date && a.status !== 'cancelled' && !exclude.includes(a.id)) : busySlots.filter(a => a.date === date);
+  const busy = src.map(a => ({ st: mins(a.time), en: mins(a.time) + a.duration, b: a.mode === 'domicile' ? buf : 0 }));
+  const myB = mode === 'domicile' ? buf : 0, step = Math.max(5, Number(s.step) || 30), out = [];
+  for (let t = mins(c.start); t + dur <= mins(c.end); t += step){
+    if (dt(date, hm(t)).getTime() < limit) continue;
+    const taken = busy.some(x => { const g = Math.max(x.b, myB); return t < x.en + g && t + dur + g > x.st; });
+    out.push({ time: hm(t), free: !taken });
+  }
+  return out;
+}
+function dayStatus(date, dur, mode){
+  if (date < today()) return 'past';
+  const sl = slotsFor(date, dur, mode);
+  if (!sl) return 'closed';
+  if (!sl.length) return date === today() ? 'past' : 'closed';
+  return sl.some(x => x.free) ? 'open' : 'full';
+}
+function weekStart(offset){ const d = new Date(); const wd = (d.getDay() + 6) % 7; d.setDate(d.getDate() - wd + offset * 7); return ds(d); }
+
+/* ===================== Rendez-vous ===================== */
+const apptTotal = a => (a.override !== null && a.override !== undefined && a.override !== '') ? Number(a.override) : Number(a.price ? a.price.total : 0);
+const apptStart = a => dt(a.date, a.time);
+const apptEnd = a => new Date(apptStart(a).getTime() + a.duration * 60000);
+const isUpcoming = a => a.status === 'booked' && apptStart(a) > new Date();
+const sortAppts = l => l.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+function autoComplete(){
+  const now = new Date(); let ch = false;
+  db.appts.forEach(a => { if (a.status === 'booked' && apptEnd(a) < now){ a.status = 'done'; ch = true; } });
+  if (ch) save();
+}
+function visitsBefore(clientId, date, time, extra = []){
+  const key = date + time;
+  return db.appts.concat(extra).filter(a => a.clientId === clientId && a.status !== 'cancelled' && (a.date + a.time) < key).length;
+}
+function loyaltyHit(n){ const l = db.settings.loyalty, e = Number(l.every); return l.on && e > 0 && n > e && (n - 1) % e === 0; }
+function nextLoyalty(k){ for (let n = k + 1; n < k + 200; n++) if (loyaltyHit(n)) return n; return null; }
+function refStats(c){
+  const r = db.settings.referral;
+  if (!c || !c.refCode) return { friends: 0, earned: 0, credits: 0 };
+  const ids = new Set(db.appts.filter(a => a.refCode === c.refCode && a.status !== 'cancelled' && a.clientId !== c.id).map(a => a.clientId));
+  const friends = 'refFriends' in c ? c.refFriends : ids.size, need = Number(r.needed) || 0;
+  const earned = need > 0 ? Math.floor(friends / need) : 0;
+  return { friends, earned, credits: r.on ? Math.max(0, earned - (c.refUsed || 0)) : 0 };
+}
+function computePrice({ service, client, mode, km, sub, n, allowRef }){
+  const s = db.settings;
+  const stu = studentOK(client) && service.student !== null && service.student !== '' && service.student !== undefined;
+  const base = Number(stu ? service.student : service.price) || 0;
+  const lines = [{ label: service.name + (stu ? ' · tarif étudiant' : ''), amount: base }];
+  let disc = 0; const used = {};
+  if (sub){ const d = Math.min(base, Number(s.sub.discount) || 0); lines.push({ label: 'Abonnement', amount: -d }); disc += d; }
+  const rest = base - disc; let best = null;
+  if (client && client.hasAccount && n && loyaltyHit(n))
+    best = { k: 'loyalty', label: `Fidélité · ${n}e rdv −${s.loyalty.pct} %`, amount: round(rest * s.loyalty.pct / 100) };
+  if (allowRef && client && refStats(client).credits > 0){
+    const a = round(rest * s.referral.pct / 100);
+    if (!best || a > best.amount) best = { k: 'referral', label: `Parrainage −${s.referral.pct} %`, amount: a };
+  }
+  if (best){ lines.push({ label: best.label, amount: -best.amount }); disc += best.amount; used[best.k] = true; }
+  let travel = 0;
+  if (mode === 'domicile'){ travel = travelFee(km || 0); lines.push({ label: `Déplacement · ≈ ${km || 0} km`, amount: travel }); }
+  return { base, travel, discount: round(disc), total: round(Math.max(0, base - disc) + travel), lines, used };
+}
+function cancelAppt(a, by){
+  a.status = 'cancelled'; a.cancelledBy = by; a.cancelledAt = new Date().toISOString();
+  if (a.usedRef){ const c = cById(a.clientId); if (c) c.refUsed = Math.max(0, (c.refUsed || 0) - 1); a.usedRef = false; }
+  if (a.date >= today()) notifyWaitlist(a.date);
+}
+function notifyWaitlist(date){
+  db.waitlist.filter(w => w.date === date && w.status === 'waiting').forEach(w => {
+    const c = cById(w.clientId);
+    if (c && c.hasAccount){
+      addMsg(c.id, 'barber', `Bonne nouvelle ${c.first} : une place s'est libérée le ${dayLong(date)}. Réserve vite depuis l'accueil !`, { auto: true });
+      w.status = 'notified';
+    } else w.freed = true;
+  });
+}
+function addMsg(clientId, from, text, extra = {}){
+  db.messages.push({ id: uid(), clientId, from, text, at: new Date().toISOString(), readBarber: from === 'barber', readClient: from === 'client', ...extra });
+}
+const unreadClient = c => c ? db.messages.filter(m => m.clientId === c.id && m.from === 'barber' && !m.readClient).length : 0;
+const unreadBarber = () => db.messages.filter(m => m.from === 'client' && !m.readBarber).length;
+const pendingStudents = () => db.clients.filter(c => c.hasAccount && c.student && c.student.status === 'pending');
+const newAppts = () => db.appts.filter(a => !a.seen && a.status === 'booked');
+const waitingList = () => db.waitlist.filter(w => w.date >= today() && w.status !== 'done');
+function barberPending(){ return unreadBarber() + pendingStudents().length + newAppts().length; }
+
+function gcalUrl(a){
+  const st = apptStart(a), en = apptEnd(a);
+  const f = d => d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + 'T' + pad(d.getHours()) + pad(d.getMinutes()) + '00';
+  const loc = a.mode === 'domicile' ? addrStr(a.address) : (salonStr() || (db.settings.salon.city || 'Illzach'));
+  const p = new URLSearchParams({ action: 'TEMPLATE', text: `${a.serviceName} · ${db.home.name}`, dates: f(st) + '/' + f(en), ctz: 'Europe/Paris',
+    details: `Rdv ${a.mode === 'domicile' ? 'à domicile' : 'au salon'} avec ${db.home.name} (${db.home.tagline}). Total : ${eur(apptTotal(a))}.`, location: loc });
+  return 'https://calendar.google.com/calendar/render?' + p.toString();
+}
+
+/* ===================== Exemples ===================== */
+function seedDemo(){
+  const shift = (n, back) => { let d = addDays(today(), n); let g = 0; while (!dayConf(d) && g++ < 7) d = addDays(d, back ? -1 : 1); return d; };
+  const now = new Date().toISOString();
+  const mk = (o) => Object.assign({ id: uid(), demo: true, userId: null, email: null, hasAccount: false, refCode: null, refUsed: 0, student: { status: 'none' }, notes: '', addresses: [], createdAt: now }, o);
+  const yanis = mk({ first: 'Yanis', last: 'Benali', phone: '0612345678', hasAccount: true, email: 'yanis.exemple@exemple.fr', refCode: 'YANI482',
+    student: { status: 'ok', date: now }, addresses: [{ street: '12 rue de Mulhouse', zip: '68110', city: 'Illzach', info: '2e étage, code 4512' }], notes: 'Dégradé bas, garde la longueur dessus.' });
+  const karim = mk({ first: 'Karim', last: 'Haddad', phone: '0698765432', hasAccount: true, email: 'karim.exemple@exemple.fr', refCode: 'KARI317',
+    student: { status: 'pending', proof: placeholder(1, 'CARTE ÉTUDIANT'), date: now } });
+  const lucas = mk({ first: 'Lucas', last: 'Muller', phone: '0611223344' });
+  const theo = mk({ first: 'Théo', last: 'Klein', phone: '0755667788' });
+  db.clients.push(yanis, karim, lucas, theo);
+  const add = (c, sid, mode, date, time, extra = {}) => {
+    const service = svc(sid); const km = mode === 'domicile' ? 0 : null;
+    const n = visitsBefore(c.id, date, time) + 1;
+    const a = { id: uid(), demo: true, clientId: c.id, serviceId: sid, serviceName: service.name, duration: service.duration, mode, address: mode === 'domicile' ? c.addresses[0] : null, km,
+      date, time, photo: null, detail: '', subId: null, refCode: null, payment: 'Espèces', override: null, status: date < today() ? 'done' : 'booked', createdAt: now, seen: true,
+      price: computePrice({ service, client: c, mode, km, sub: false, n, allowRef: false }), ...extra };
+    db.appts.push(a); return a;
+  };
+  add(yanis, 'coupe', 'salon', shift(-35, true), '10:00');
+  add(yanis, 'coupe', 'salon', shift(-21, true), '10:00');
+  add(lucas, 'barbe', 'salon', shift(-10, true), '18:00');
+  add(yanis, 'coupe-barbe', 'salon', shift(-7, true), '11:00');
+  add(lucas, 'coupe', 'salon', shift(1), '14:00', { seen: false });
+  add(theo, 'coupe', 'salon', shift(1), '11:00', { refCode: 'YANI482', seen: false });
+  add(yanis, 'coupe-barbe', 'domicile', shift(2), '10:00', { detail: 'Comme la dernière fois.' });
+  add(karim, 'coupe', 'salon', shift(3), '17:00');
+  db.reviews.push(
+    { id: uid(), demo: true, clientId: yanis.id, name: 'Yanis B.', stars: 5, text: 'Dégradé propre, ponctuel et à l\'écoute. Je recommande !', public: true, at: now },
+    { id: uid(), demo: true, clientId: lucas.id, name: 'Lucas M.', stars: 4, text: 'Rapide et pro, la barbe est nickel.', public: true, at: now },
+    { id: uid(), demo: true, clientId: karim.id, name: 'Karim H.', stars: 3, text: 'Bon résultat, juste 10 minutes de retard.', public: false, at: now });
+  db.messages.push(
+    { id: uid(), demo: true, clientId: yanis.id, from: 'barber', text: 'Salut Yanis, je passe chez toi samedi, prévois une chaise près d\'une prise 👍', at: now, readBarber: true, readClient: false },
+    { id: uid(), demo: true, clientId: karim.id, from: 'client', text: 'Salut ! Tu fais aussi les dessins dans les cheveux ?', at: now, readBarber: false, readClient: true });
+  db.waitlist.push({ id: uid(), demo: true, date: shift(4), clientId: lucas.id, serviceId: 'coupe', at: now, status: 'waiting' });
+  db.demo = true;
+}
+function clearDemo(){
+  const ids = new Set(db.clients.filter(c => c.demo).map(c => c.id));
+  db.clients = db.clients.filter(c => !c.demo);
+  db.appts = db.appts.filter(a => !a.demo && !ids.has(a.clientId));
+  db.reviews = db.reviews.filter(r => !r.demo && !ids.has(r.clientId));
+  db.messages = db.messages.filter(m => !m.demo && !ids.has(m.clientId));
+  db.waitlist = db.waitlist.filter(w => !w.demo && !ids.has(w.clientId));
+  db.subs = db.subs.filter(s => !ids.has(s.clientId));
+  db.demo = false;
+}
+
+/* ===================== État de l'interface ===================== */
+const ui = { tab: 'home', home: 'vitrine', b: null, esp: 'compte', auth: { mode: 'login' }, returnToBook: false,
+  bt: 'agenda', ag: 'upcoming', pf: null, pfq: '', conv: null, pin: '', stuProof: null, rv: { stars: 0, text: '', pub: true },
+  gain: 'month', contact: {}, wl: {} };
+let pendingConfirm = null;
+
+/* ===================== Rendu général ===================== */
+function markRead(){
+  let ch = false;
+  if (ui.tab === 'me' && ui.esp === 'messages' && me()){ const id = me().id; let n = 0; db.messages.forEach(m => { if (m.clientId === id && m.from === 'barber' && !m.readClient){ m.readClient = true; n++; } }); if (n) sb.rpc('marquer_lus').then(() => {}, () => {}); }
+  if (ui.tab === 'barber' && isAdmin && ui.bt === 'messages' && ui.conv){ db.messages.forEach(m => { if (m.clientId === ui.conv && m.from === 'client' && !m.readBarber){ m.readBarber = true; ch = true; } }); }
+  if (ch) save();
+}
+function render(){
+  markRead();
+  $('#top').innerHTML = viewTop();
+  let h;
+  if (ui.tab === 'home') h = ui.home === 'book' && ui.b ? viewBook() : viewHome();
+  else if (ui.tab === 'me') h = viewMe();
+  else h = viewBarber();
+  $('#view').innerHTML = h;
+  afterRender();
+}
+function viewTop(){
+  const c = me(), nMe = unreadClient(c), nB = isAdmin ? barberPending() : 0;
+  const t = [['home', 'Accueil', 0], ['me', 'Mon espace', nMe], ['barber', 'Coiffeur', nB]];
+  return `<nav class="tabs" aria-label="Sections">${t.map(([k, l, n]) => `<button class="tab" data-a="tab" data-t="${k}" ${ui.tab === k ? 'aria-current="page"' : ''}>${l}${n ? `<span class="badge">${n}</span>` : ''}</button>`).join('')}</nav>`;
+}
+function afterRender(){
+  const car = $('#car');
+  if (car) car.addEventListener('scroll', () => {
+    const i = Math.round(car.scrollLeft / car.clientWidth);
+    $$('#dots button').forEach((b, j) => b.setAttribute('aria-current', String(i === j)));
+  }, { passive: true });
+}
+const top0 = () => window.scrollTo(0, 0);
+function avatar(){ const h = db.home; return `<div class="avatar">${h.logo ? `<img src="${h.logo}" alt="">` : esc((h.name || 'B').charAt(0))}</div>`; }
+
+/* ===================== Accueil (vitrine) ===================== */
+function viewHome(){
+  const h = db.home, s = db.settings;
+  const slides = h.slides.slice(0, 4);
+  const svcs = activeServices();
+  let o = `<section class="brand">${avatar()}<div><div class="brand-name">${esc(h.name)}</div><div class="brand-tag">${esc(h.tagline)}</div></div></section>`;
+  if (slides.length){
+    o += `<div class="carousel" id="car" tabindex="0" aria-label="Photos">${slides.map((sl, i) => `<figure class="slide"><img src="${sl.img || placeholder(i)}" alt="${esc(sl.caption || 'Photo ' + (i + 1))}"${i ? ' loading="lazy"' : ''}>${sl.caption ? `<figcaption>${esc(sl.caption)}</figcaption>` : ''}</figure>`).join('')}</div>`;
+    if (slides.length > 1) o += `<div class="dots" id="dots">${slides.map((_, i) => `<button data-a="slideGo" data-i="${i}" aria-label="Photo ${i + 1}" aria-current="${i === 0}"></button>`).join('')}</div>`;
+  }
+  o += `<section class="hero"><div class="eyebrow">${esc(h.eyebrow)}</div><h1 class="h1">${esc(h.title)}</h1><p class="lead">${esc(h.intro)}</p>
+    ${s.locked ? `<div class="notice">${esc(s.lockMsg)}</div>` : ''}
+    <div class="btns"><button class="btn btn-gold" data-a="book">${esc(h.cta)}</button><button class="btn btn-ghost" data-a="discover">${esc(h.cta2)}</button></div></section>`;
+  if (h.student.on && svcs.some(x => x.student)) o += `<div class="banner"><div class="banner-k">Tarif étudiant</div><p>${esc(h.student.text)}</p><div><button class="btn btn-sm" data-a="goStudent">Envoyer mon justificatif</button></div></div>`;
+  o += `<div id="decouvrir">`;
+  if (h.about.on) o += `<section class="block"><div class="eyebrow">${esc(h.name)}</div><h2 class="h2">${esc(h.about.title)}</h2>${h.about.photo ? `<img class="about-img" src="${h.about.photo}" alt="">` : ''}<p class="pre">${esc(h.about.text)}</p></section>`;
+  if (h.services.on){
+    o += `<section class="block"><h2 class="h2">${esc(h.services.title)}</h2><div class="card"><div class="list">${svcs.map(x => `<div class="svc-row"><div><div class="svc-name">${esc(x.name)}</div><div class="muted small">${x.duration} min</div></div><div class="ta-r"><div class="price">${eur(x.price)}</div>${h.student.on && x.student ? `<div class="small gold">Étudiant ${eur(x.student)}</div>` : ''}</div></div>`).join('')}</div></div>`;
+    if (s.modes.domicile) o += `<p class="small muted">À domicile : +${eur(s.travel.near)} jusqu'à ${s.travel.threshold} km, +${eur(s.travel.far)} au-delà (jusqu'à ${s.travel.maxKm} km d'Illzach).</p>`;
+    if (h.services.note) o += `<p class="small muted">${esc(h.services.note)}</p>`;
+    o += `</section>`;
+  }
+  if (h.how.on) o += `<section class="block"><h2 class="h2">${esc(h.how.title)}</h2><ol class="steps-list">${h.how.steps.map(st => `<li><div class="stack-s"><div class="h3">${esc(st.t)}</div><p class="muted">${esc(st.d)}</p></div></li>`).join('')}</ol></section>`;
+  if (h.perks.on){
+    const p = [];
+    if (s.loyalty.on) p.push(['Fidélité', `${+s.loyalty.every + 1}e coupe −${s.loyalty.pct} %`, `Puis la ${2 * s.loyalty.every + 1}e, et ainsi de suite. Avec un compte client.`]);
+    if (s.referral.on) p.push(['Parrainage', `−${s.referral.pct} % pour toi`, `Quand ${s.referral.needed} amis réservent avec ton code, ta prochaine coupe est à −${s.referral.pct} %.`]);
+    if (s.sub.on) p.push(['Abonnement', `−${eur(s.sub.discount)} par coupe`, `Un rdv toutes les ${s.sub.freqs.join(', ').replace(/, (\d)$/, ' ou $1')} semaines pendant ${s.sub.months} mois, réservé d'un coup.`]);
+    if (p.length) o += `<section class="block"><h2 class="h2">${esc(h.perks.title)}</h2>${p.map(([k, v, d]) => `<div class="card perk"><div class="label">${k}</div><div class="perk-v">${v}</div><p class="muted small">${d}</p></div>`).join('')}</section>`;
+  }
+  if (h.quick.on){
+    const q = [`<button class="btn btn-gold" data-a="book">Réserver</button>`, `<button class="btn" data-a="tab" data-t="me">Mon espace</button>`];
+    if (s.phone) q.push(`<a class="btn" target="_blank" rel="noopener" href="tel:${normPhone(s.phone)}">Appeler</a>`);
+    if (s.instagram) q.push(`<a class="btn" href="https://instagram.com/${encodeURIComponent(s.instagram.replace(/^@/, ''))}" target="_blank" rel="noopener">Instagram</a>`);
+    if (s.modes.salon && salonStr()) q.push(`<a class="btn" href="${mapsUrl(salonStr())}" target="_blank" rel="noopener">Itinéraire</a>`);
+    q.push(`<button class="btn" data-a="contact">Écrire</button>`);
+    o += `<section class="block"><h2 class="h2">${esc(h.quick.title)}</h2><div class="grid2">${q.join('')}</div>${s.phone ? `<p class="small muted">Téléphone : <span class="num" style="user-select:all">${fmtPhone(s.phone)}</span></p>` : ''}</section>`;
+  }
+  if (h.reviews.on){
+    const pubs = db.reviews.filter(r => r.public && !r.hidden);
+    const shown = pubs.filter(r => r.stars >= 4).sort((a, b) => b.at.localeCompare(a.at)).slice(0, 6);
+    if (shown.length){
+      const avg = pubs.reduce((a, r) => a + r.stars, 0) / pubs.length;
+      o += `<section class="block"><h2 class="h2">${esc(h.reviews.title)}</h2><p class="row">${stars(avg)} <b>${fr1(avg)}</b><span class="muted small">· ${pubs.length} avis</span></p>${shown.map(r => `<div class="card review">${stars(r.stars)}<p>${esc(r.text)}</p><p class="small muted">${esc(r.name)}</p></div>`).join('')}</section>`;
+    }
+  }
+  const pays = s.payments.filter(p => p.on).map(p => p.name);
+  o += `<section class="block"><div class="card stack"><dl class="kv">
+    <dt>Où</dt><dd>${[s.modes.salon ? (salonStr() ? 'Salon : ' + esc(salonStr()) : 'Salon à ' + esc(s.salon.city || 'Illzach')) : '', s.modes.domicile ? `À domicile jusqu'à ${s.travel.maxKm} km` : ''].filter(Boolean).join('<br>')}</dd>
+    ${pays.length ? `<dt>Paiement</dt><dd>${esc(pays.join(' · '))}</dd>` : ''}
+    <dt>Annulation</dt><dd>Gratuite jusqu'à ${s.cancelHours} h avant</dd></dl></div></section></div>`;
+  return o;
+}
+
+/* ===================== Réservation ===================== */
+const STEP_T = { svc: 'Prestation et lieu', addr: 'Ton adresse', date: 'Date et heure', photo: 'Ta coupe', sub: 'Abonnement', recap: 'Récapitulatif' };
+function bookSteps(b){ const st = ['svc']; if (b.mode === 'domicile') st.push('addr'); st.push('date', 'photo'); if (db.settings.sub.on) st.push('sub'); st.push('recap'); return st; }
+function startBooking(){
+  const s = db.settings;
+  if (s.locked){ openModal(`<h3 class="h3">Réservations en pause</h3><p>${esc(s.lockMsg)}</p><button class="btn btn-gold" data-a="contact">Écrire au coiffeur</button><button class="btn btn-ghost" data-a="closeModal">Fermer</button>`); return; }
+  const c = me();
+  ui.b = { step: 'svc', svc: null, mode: onlyMode(), addr: { street: '', zip: '', city: '', info: '' }, km: null, tooFar: false, week: 0, date: null, time: null,
+    photo: null, detail: '', freq: 0, first: c ? c.first : '', last: c ? c.last : '', phone: c ? fmtPhone(c.phone) : '', ref: '', pay: '', createAcc: false, email: '', pw: '', pending: null, result: null };
+  if (c && c.addresses.length) Object.assign(ui.b.addr, c.addresses[c.addresses.length - 1]);
+  busyP = loadBusy();
+  ui.tab = 'home'; ui.home = 'book'; render(); top0();
+}
+function viewBook(){
+  const b = ui.b;
+  if (b.step === 'done') return viewDone();
+  const steps = bookSteps(b), i = steps.indexOf(b.step);
+  let o = `<div class="stack-l"><div class="stack-s"><div class="row between"><button class="back" data-a="bBack">‹ ${i === 0 ? 'Accueil' : 'Retour'}</button><span class="label">Étape ${i + 1} / ${steps.length}</span></div>
+    <div class="progress">${steps.map((_, j) => `<i class="${j <= i ? 'on' : ''}"></i>`).join('')}</div><h1 class="h2">${STEP_T[b.step]}</h1></div>`;
+  o += ({ svc: stepSvc, addr: stepAddr, date: stepDate, photo: stepPhoto, sub: stepSub, recap: stepRecap })[b.step]();
+  return o + '</div>';
+}
+function stepSvc(){
+  const b = ui.b, s = db.settings, c = me();
+  let o = `<div class="stack">${activeServices().map(x => {
+    const stu = studentOK(c) && x.student;
+    return `<button class="opt" data-a="bSvc" data-id="${x.id}" aria-pressed="${b.svc === x.id}"><div class="stack-s"><span class="opt-t">${esc(x.name)}</span><span class="muted small">${x.duration} min</span></div><div class="ta-r"><div class="price">${eur(stu ? x.student : x.price)}</div>${stu ? '<div class="tiny gold">Tarif étudiant</div>' : ''}</div></button>`;
+  }).join('')}</div>`;
+  if (s.modes.salon && s.modes.domicile){
+    o += `<div class="stack"><div class="h3">Où ?</div>
+      <button class="opt" data-a="bMode" data-m="salon" aria-pressed="${b.mode === 'salon'}"><div class="stack-s"><span class="opt-t">Au salon</span><span class="muted small">${esc(salonStr() || (s.salon.city || 'Illzach'))}</span></div><span class="price">+0 €</span></button>
+      <button class="opt" data-a="bMode" data-m="domicile" aria-pressed="${b.mode === 'domicile'}"><div class="stack-s"><span class="opt-t">À domicile</span><span class="muted small">+${eur(s.travel.near)} jusqu'à ${s.travel.threshold} km, +${eur(s.travel.far)} au-delà</span></div><span class="price">+${eur(s.travel.near)}</span></button></div>`;
+  } else o += `<p class="muted small">${b.mode === 'domicile' ? 'Rendez-vous à domicile uniquement en ce moment.' : 'Rendez-vous au salon uniquement en ce moment.'}</p>`;
+  return o + `<button class="btn btn-gold" data-a="bNext">Continuer</button>`;
+}
+function stepAddr(){
+  const b = ui.b, s = db.settings, c = me(), a = b.addr;
+  let o = '';
+  if (c && c.addresses.length > 1) o += `<div class="chipset">${c.addresses.map((x, i) => `<button class="chip" data-a="bAddrPick" data-i="${i}">${esc(x.street)}</button>`).join('')}</div>`;
+  o += `<div class="stack"><label class="field"><span>Rue et numéro</span><input id="ad-street" autocomplete="street-address" data-bind="b.addr.street" value="${esc(a.street)}" placeholder="12 rue de Mulhouse"></label>
+    <div class="grid2"><label class="field"><span>Code postal</span><input id="ad-zip" inputmode="numeric" maxlength="5" autocomplete="postal-code" data-bind="b.addr.zip" value="${esc(a.zip)}" placeholder="68110"></label>
+    <label class="field"><span>Ville</span><input id="ad-city" autocomplete="address-level2" data-bind="b.addr.city" value="${esc(a.city)}" placeholder="Illzach"></label></div>
+    <label class="field"><span>Précisions (étage, code, interphone…)</span><input id="ad-info" data-bind="b.addr.info" value="${esc(a.info)}" placeholder="3e étage, code 1234"></label></div>
+    <p class="small muted">Déplacement : ${eur(s.travel.near)} jusqu'à ${s.travel.threshold} km, ${eur(s.travel.far)} au-delà. Distance estimée d'après le code postal, je me déplace jusqu'à ${s.travel.maxKm} km.</p>`;
+  if (b.tooFar){
+    o += `<div class="card line stack"><div class="h3 bad">Trop loin pour un déplacement</div><p>${esc(a.city || a.zip)} est à environ ${b.km >= 999 ? 'plus de 100' : b.km} km d'Illzach. Je me déplace jusqu'à ${s.travel.maxKm} km.</p>
+      <button class="btn" data-a="contact">Écrire au coiffeur</button>${s.modes.salon ? `<button class="btn btn-ghost" data-a="bToSalon">Venir au salon à la place</button>` : ''}</div>`;
+  }
+  return o + `<button class="btn btn-gold" data-a="bNext">Continuer</button>`;
+}
+function stepDate(){
+  const b = ui.b, s = db.settings, service = svc(b.svc), ws = weekStart(b.week);
+  const days = Array.from({ length: 7 }, (_, i) => addDays(ws, i));
+  const lab = { past: '', closed: 'fermé', full: 'complet', open: '' };
+  let o = `<div class="weeknav"><button class="btn btn-sm" data-a="bWeek" data-d="-1" ${b.week <= 0 ? 'disabled' : ''} aria-label="Semaine précédente">‹</button>
+    <div class="label" style="text-align:center">${b.week === 0 ? 'Cette semaine' : b.week === 1 ? 'Semaine prochaine' : 'Semaine du ' + dayShort(ws).replace(/^\S+ /, '')}</div>
+    <button class="btn btn-sm" data-a="bWeek" data-d="1" ${b.week >= s.aheadWeeks - 1 ? 'disabled' : ''} aria-label="Semaine suivante">›</button></div>
+    <div class="days">${days.map(d => {
+      const st = dayStatus(d, service.duration, b.mode), dd = parseD(d);
+      return `<button class="day ${st}" data-a="bDay" data-d="${d}" aria-pressed="${b.date === d}" ${st === 'past' || st === 'closed' ? 'disabled' : ''}><span class="d">${DAYS_S[dd.getDay()].replace('.', '')}</span><b>${dd.getDate()}</b><span class="s">${lab[st]}</span></button>`;
+    }).join('')}</div>`;
+  if (b.date){
+    const st = dayStatus(b.date, service.duration, b.mode), sl = slotsFor(b.date, service.duration, b.mode) || [];
+    o += `<div class="stack"><div class="h3">${dayLong(b.date)}</div>`;
+    if (st === 'full'){
+      o += `<div class="card line stack"><p><b>Journée complète.</b> Inscris-toi sur la liste d'attente : si une place se libère, je te préviens.</p><button class="btn" data-a="waitJoin">Rejoindre la liste d'attente</button></div>`;
+    }
+    if (sl.length) o += `<div class="slots">${sl.map(x => x.free ? `<button class="slot" data-a="bTime" data-t="${x.time}" aria-pressed="${b.time === x.time}">${hTime(x.time)}</button>` : `<button class="slot taken" disabled aria-label="${hTime(x.time)} déjà pris">${hTime(x.time)}</button>`).join('')}</div>`;
+    o += `</div>`;
+  } else o += `<p class="muted">Aucun créneau libre cette semaine. Passe à la semaine suivante.</p>`;
+  return o + `<button class="btn btn-gold" data-a="bNext" ${b.time ? '' : 'disabled'}>Continuer</button>`;
+}
+function stepPhoto(){
+  const b = ui.b;
+  return `<p class="muted">Montre-moi la coupe que tu veux et ajoute un détail. Les deux sont facultatifs.</p>
+    ${b.photo ? `<div class="stack"><img class="thumb" src="${b.photo}" alt="Coupe voulue"><button class="btn btn-ghost btn-sm" data-a="bPhotoDel">Enlever la photo</button></div>`
+      : `<label class="upload"><input type="file" accept="image/*" data-upload="ui:b.photo" data-max="900"><b>Ajouter une photo</b><span class="small">Capture d'Instagram, photo d'une coupe…</span></label>`}
+    <label class="field"><span>Un détail ?</span><textarea id="bk-detail" data-bind="b.detail" placeholder="Ex. : dégradé bas, garder la longueur sur le dessus">${esc(b.detail)}</textarea></label>
+    <button class="btn btn-gold" data-a="bNext">Continuer</button>`;
+}
+function bookingPlan(b){
+  const service = svc(b.svc), plan = [{ date: b.date, time: b.time, ok: true }];
+  if (!b.freq) return plan;
+  const end = addMonths(b.date, db.settings.sub.months);
+  for (let d = addDays(b.date, 7 * b.freq); d < end; d = addDays(d, 7 * b.freq)){
+    const sl = slotsFor(d, service.duration, b.mode);
+    const free = (sl || []).filter(x => x.free);
+    if (!free.length){ plan.push({ date: d, time: null, ok: false }); continue; }
+    if (free.some(x => x.time === b.time)){ plan.push({ date: d, time: b.time, ok: true }); continue; }
+    free.sort((x, y) => Math.abs(mins(x.time) - mins(b.time)) - Math.abs(mins(y.time) - mins(b.time)));
+    plan.push({ date: d, time: free[0].time, ok: true, moved: true });
+  }
+  return plan;
+}
+function stepSub(){
+  const b = ui.b, s = db.settings, c = me(), service = svc(b.svc);
+  if (!c) return `<div class="card stack"><p>Avec l'abonnement, tu réserves un rdv toutes les ${s.sub.freqs.join(', ')} semaines pendant ${s.sub.months} mois et tu gagnes <b>${eur(s.sub.discount)} par coupe</b>.</p><p class="muted small">Il faut un compte client pour suivre ta série de rdv.</p>
+    <button class="btn" data-a="goAuthFromBook">Me connecter ou créer mon compte</button></div><button class="btn btn-gold" data-a="bNext">Continuer sans abonnement</button>`;
+  const cnt = f => { let n = 0; const end = addMonths(b.date, s.sub.months); for (let d = b.date; d < end; d = addDays(d, 7 * f)) n++; return n; };
+  let o = `<p class="muted">Facultatif. ${eur(s.sub.discount)} de moins sur chaque coupe pendant ${s.sub.months} mois, les rdv sont créés d'un coup.</p><div class="stack">
+    <button class="opt" data-a="bFreq" data-f="0" aria-pressed="${!b.freq}"><span class="opt-t">Sans abonnement</span></button>
+    ${s.sub.freqs.slice().sort().map(f => `<button class="opt" data-a="bFreq" data-f="${f}" aria-pressed="${b.freq === f}"><div class="stack-s"><span class="opt-t">${f === 1 ? 'Toutes les semaines' : `Toutes les ${f} semaines`}</span><span class="muted small">≈ ${cnt(f)} rdv · ${eur(Math.max(0, (studentOK(c) && service.student ? service.student : service.price) - s.sub.discount))} la ${esc(service.name.toLowerCase())}</span></div><span class="price">−${eur(s.sub.discount)}</span></button>`).join('')}</div>`;
+  if (b.freq){
+    const plan = bookingPlan(b);
+    o += `<div class="card stack-s"><div class="label">Tes ${plan.filter(p => p.ok).length} rdv</div>${plan.map(p => `<div class="row between small"><span>${dayShort(p.date)}</span><span class="${p.ok ? (p.moved ? 'warn' : '') : 'bad'}">${p.ok ? hTime(p.time) + (p.moved ? ' (décalé)' : '') : 'complet ou fermé, sauté'}</span></div>`).join('')}</div>`;
+  }
+  return o + `<button class="btn btn-gold" data-a="bNext">Continuer</button>`;
+}
+function previewPrice(){
+  const b = ui.b, c = me(), service = svc(b.svc);
+  const n = c ? visitsBefore(c.id, b.date, b.time) + 1 : 0;
+  return computePrice({ service, client: c, mode: b.mode, km: b.km, sub: !!b.freq, n, allowRef: true });
+}
+function stepRecap(){
+  const b = ui.b, s = db.settings, c = me(), service = svc(b.svc), pr = previewPrice();
+  const pays = s.payments.filter(p => p.on);
+  const nPlan = b.freq ? bookingPlan(b).filter(p => p.ok).length : 1;
+  let o = `<div class="card stack"><dl class="kv"><dt>Prestation</dt><dd>${esc(service.name)} · ${service.duration} min</dd>
+    <dt>Quand</dt><dd>${dayLong(b.date)} à ${hTime(b.time)}</dd><dt>Où</dt><dd>${b.mode === 'domicile' ? esc(addrStr(b.addr)) + (b.addr.info ? `<br><span class="muted small">${esc(b.addr.info)}</span>` : '') : 'Au salon' + (salonStr() ? '<br><span class="muted small">' + esc(salonStr()) + '</span>' : '')}</dd>
+    ${b.freq ? `<dt>Abonnement</dt><dd>Toutes les ${b.freq > 1 ? b.freq + ' ' : ''}semaine${b.freq > 1 ? 's' : ''} · ${nPlan} rdv</dd>` : ''}
+    ${b.detail ? `<dt>Détail</dt><dd>${esc(b.detail)}</dd>` : ''}</dl>${b.photo ? `<img class="thumb-s" src="${b.photo}" alt="Coupe voulue">` : ''}</div>`;
+  if (c) o += `<div class="card row"><div class="grow"><div class="label">Au nom de</div><b>${esc(cName(c))}</b> · <span class="num">${fmtPhone(c.phone)}</span></div></div>`;
+  else o += `<div class="stack"><div class="h3">Tes coordonnées</div><div class="grid2"><label class="field"><span>Prénom *</span><input id="bk-first" autocomplete="given-name" data-bind="b.first" value="${esc(b.first)}"></label>
+    <label class="field"><span>Nom *</span><input id="bk-last" autocomplete="family-name" data-bind="b.last" value="${esc(b.last)}"></label></div>
+    <label class="field"><span>Téléphone *</span><input id="bk-phone" type="tel" inputmode="tel" autocomplete="tel" data-bind="b.phone" value="${esc(b.phone)}" placeholder="06 12 34 56 78"></label>
+    <label class="check"><input type="checkbox" id="bk-acc" data-bind="b.createAcc" data-rr ${b.createAcc ? 'checked' : ''}><span class="grow">Créer mon compte en même temps<br><span class="small muted">Fidélité, parrainage, suivi de tes rdv</span></span></label>
+    ${b.createAcc ? `<label class="field"><span>Ton e-mail</span><input id="bk-email" type="email" autocomplete="email" autocapitalize="none" data-bind="b.email" value="${esc(b.email)}"></label>
+    <label class="field"><span>Choisis un mot de passe (8 caractères min.)</span><input id="bk-pw" type="password" autocomplete="new-password" data-bind="b.pw" value="${esc(b.pw)}"></label>` : ''}</div>`;
+  if (s.referral.on) o += `<label class="field"><span>Code parrainage d'un ami (facultatif)</span><input id="bk-ref" autocapitalize="characters" data-bind="b.ref" value="${esc(b.ref)}" placeholder="Ex. : YANI482"></label>`;
+  o += `<div class="card stack"><div class="label">${b.freq ? 'Prix du 1er rdv' : 'Total'}</div><div class="lines">${pr.lines.map(l => `<div class="row small"><span>${esc(l.label)}</span><span class="num ${l.amount < 0 ? 'ok' : ''}">${eur(l.amount)}</span></div>`).join('')}</div><hr class="sep"><div class="row between"><span class="h3">À payer sur place</span><span class="total num">${eur(pr.total)}</span></div>
+    ${b.freq ? `<p class="small muted">Les ${nPlan - 1} rdv suivants sont aussi à −${eur(s.sub.discount)}. La fidélité s'ajoute automatiquement quand elle tombe.</p>` : ''}</div>`;
+  if (pays.length) o += `<div class="stack-s"><div class="label">Je paierai par</div><div class="chipset">${pays.map(p => `<button class="chip" data-a="bPay" data-p="${esc(p.name)}" aria-pressed="${b.pay === p.name}">${esc(p.name)}</button>`).join('')}</div></div>`;
+  o += `<p class="small muted">Annulation gratuite jusqu'à ${s.cancelHours} h avant depuis Mon espace. Après, écris-moi.</p><button class="btn btn-gold" data-a="bConfirm">Confirmer le rendez-vous</button>`;
+  return o;
+}
+// La réservation est vérifiée et enregistrée côté serveur (Edge Function + Turnstile,
+// puis fonction SQL reserver_rdv qui recontrôle le créneau et recalcule le prix).
+async function confirmBooking(){
+  const b = ui.b;
+  let c = me(), createdEmail = null;
+  if (!c){
+    b.first = b.first.trim(); b.last = b.last.trim();
+    if (!b.first || !b.last) return toast('Indique ton prénom et ton nom.', 'bad');
+    if (normPhone(b.phone).length !== 10) return toast('Ton numéro doit avoir 10 chiffres.', 'bad');
+    if (b.createAcc){
+      if (!isEmail(b.email)) return toast('Indique un e-mail valide.', 'bad');
+      if ((b.pw || '').length < 8) return toast('Ton mot de passe doit faire au moins 8 caractères.', 'bad');
+      let r;
+      try { r = await signUp(b.email.trim(), b.pw, b.first, b.last, b.phone); } catch (e) { return toast(e.message, 'bad'); }
+      createdEmail = b.email.trim(); b.createAcc = false; b.pw = '';
+      c = me();
+      if (!c && r.user && r.user.identities && r.user.identities.length) b.pending = r.user.id;
+    }
+  }
+  const booking = { svc: b.svc, mode: b.mode, addr: b.addr, date: b.date, time: b.time, detail: b.detail, freq: b.freq,
+    first: b.first, last: b.last, phone: b.phone, ref: (b.ref || '').trim(), pay: b.pay };
+  let res;
+  try { res = await callEdge('reserver', { booking, photo: b.photo || null, compteNeuf: c ? null : b.pending }); }
+  catch (e){
+    if (e.message === 'creneau_pris'){ await loadBusy(); b.step = 'date'; b.time = null; render(); return toast('Ce créneau vient d\'être pris. Choisis-en un autre.', 'bad'); }
+    return toast(e.message, 'bad');
+  }
+  const created = (res.rdv || []).map(MAP.appts.from);
+  if (authUser){ try { await load(); } catch (e) {} } else db.appts.push(...created);
+  b.result = { ids: created.map(a => a.id), appts: created, first: res.prenom || b.first, email: createdEmail || (b.pending ? b.email : null), confirm: !c && !!b.pending };
+  b.step = 'done'; render(); top0();
+}
+function viewDone(){
+  const b = ui.b, a = db.appts.find(x => x.id === b.result.ids[0]) || b.result.appts[0];
+  if (!a) return `<p>Rdv introuvable.</p><button class="btn" data-a="homeBack">Accueil</button>`;
+  const first = b.result.first, more = b.result.ids.length - 1;
+  return `<div class="stack-l"><div class="big-check">✓</div><div class="stack-s" style="text-align:center"><h1 class="h1">C'est réservé${first ? ', ' + esc(first) : ''} !</h1><p class="muted">${dayLong(a.date)} à ${hTime(a.time)}</p></div>
+    <div class="card stack"><dl class="kv"><dt>Prestation</dt><dd>${esc(a.serviceName)}</dd><dt>Où</dt><dd>${a.mode === 'domicile' ? 'Chez toi : ' + esc(addrStr(a.address)) : 'Au salon' + (salonStr() ? ' · ' + esc(salonStr()) : '')}</dd><dt>Total</dt><dd class="gold">${eur(apptTotal(a))}</dd>
+    ${more ? `<dt>Abonnement</dt><dd>+ ${more} autres rdv créés</dd>` : ''}</dl></div>
+    ${b.result.email ? `<div class="card gold stack-s"><div class="label">Ton compte est créé</div><p>E-mail : <b style="user-select:all">${esc(b.result.email)}</b></p><p class="small muted">${b.result.confirm ? 'Clique sur le lien reçu par e-mail pour l\'activer, puis connecte-toi dans Mon espace.' : 'Tu retrouves tes rdv dans Mon espace.'}</p></div>` : ''}
+    <div class="stack"><a class="btn btn-gold" href="${gcalUrl(a)}" target="_blank" rel="noopener">Ajouter à Google Agenda</a>
+    ${a.mode === 'salon' && salonStr() ? `<a class="btn" href="${mapsUrl(salonStr())}" target="_blank" rel="noopener">Itinéraire vers le salon</a>` : ''}
+    ${me() ? `<button class="btn" data-a="tab" data-t="me">Voir mes rdv</button>` : `<p class="small muted">Sans compte, garde ce récap : pour annuler, écris-moi ou appelle-moi.</p>`}
+    <button class="btn btn-ghost" data-a="homeBack">Retour à l'accueil</button></div></div>`;
+}
+
+/* ===================== Mon espace ===================== */
+function viewMe(){ const c = me(); if (c) return viewAccount(c); return authUser && ui.auth.mode !== 'reset' ? viewNoProfile() : viewAuth(); }
+function viewNoProfile(){
+  return `<div class="stack-l"><div class="stack-s"><div class="eyebrow">Mon espace</div><h1 class="h1">${isAdmin ? 'Compte coiffeur' : 'Compte sans fiche'}</h1>
+    <p class="muted">${isAdmin ? 'Tu es connecté avec ton compte coiffeur. Ton agenda est dans l\'onglet Coiffeur.' : 'Ce compte n\'a pas de fiche client. Écris au coiffeur si besoin.'}</p></div>
+    ${isAdmin ? `<button class="btn btn-gold" data-a="tab" data-t="barber">Espace coiffeur</button>` : ''}<button class="btn btn-ghost" data-a="logout">Me déconnecter</button></div>`;
+}
+function viewAuth(){
+  const m = ui.auth.mode, A = ui.auth;
+  let o = `<div class="stack-l">${ui.returnToBook ? `<div class="notice">Connecte-toi ou crée ton compte pour continuer ta réservation.</div>` : ''}
+    <div class="stack-s"><div class="eyebrow">Mon espace</div><h1 class="h1">${m === 'register' ? 'Crée ton compte' : m === 'forgot' || m === 'reset' ? 'Mot de passe oublié' : 'Connexion'}</h1>
+    <p class="muted">${m === 'register' ? 'Facultatif pour réserver, obligatoire pour l\'abonnement et le tarif étudiant.' : m === 'forgot' ? 'Indique l\'e-mail de ton compte : tu recevras un lien pour choisir un nouveau mot de passe.' : m === 'reset' ? 'Choisis ton nouveau mot de passe.' : 'Retrouve tes rdv, ta carte fidélité et tes messages.'}</p></div>`;
+  if (m === 'login') o += `<form class="stack" data-submit="login"><label class="field"><span>E-mail</span><input id="li-id" type="email" autocomplete="username" autocapitalize="none" data-bind="auth.id" value="${esc(A.id || '')}" placeholder="ton@email.fr"></label>
+    <label class="field"><span>Mot de passe</span><input id="li-pw" type="password" autocomplete="current-password" data-bind="auth.pw" value="${esc(A.pw || '')}"></label>
+    <button class="btn btn-gold" type="submit">Me connecter</button></form>
+    <div class="stack-s"><button class="btn" data-a="authMode" data-m="register">Créer un compte</button><button class="link" data-a="authMode" data-m="forgot">Mot de passe oublié ?</button></div>`;
+  if (m === 'register') o += `<form class="stack" data-submit="register"><div class="grid2"><label class="field"><span>Prénom</span><input id="rg-first" autocomplete="given-name" data-bind="auth.first" value="${esc(A.first || '')}"></label>
+    <label class="field"><span>Nom</span><input id="rg-last" autocomplete="family-name" data-bind="auth.last" value="${esc(A.last || '')}"></label></div>
+    <label class="field"><span>Téléphone</span><input id="rg-phone" type="tel" inputmode="tel" autocomplete="tel" data-bind="auth.phone" value="${esc(A.phone || '')}" placeholder="06 12 34 56 78"></label>
+    <label class="field"><span>E-mail</span><input id="rg-email" type="email" autocomplete="email" autocapitalize="none" data-bind="auth.email" value="${esc(A.email || '')}" placeholder="ton@email.fr"></label>
+    <label class="field"><span>Mot de passe (8 caractères min.)</span><input id="rg-pw" type="password" autocomplete="new-password" data-bind="auth.pw2" value="${esc(A.pw2 || '')}"></label>
+    <p class="small muted">Tu te connecteras avec ton e-mail.</p><button class="btn btn-gold" type="submit">Créer mon compte</button></form>
+    <button class="btn btn-ghost" data-a="authMode" data-m="login">J'ai déjà un compte</button>`;
+  if (m === 'forgot') o += `<form class="stack" data-submit="forgot"><label class="field"><span>E-mail du compte</span><input id="fg-id" type="email" autocomplete="email" autocapitalize="none" data-bind="auth.fid" value="${esc(A.fid || '')}" placeholder="ton@email.fr"></label>
+    <button class="btn btn-gold" type="submit">Recevoir le lien</button></form>
+    <button class="btn btn-ghost" data-a="authMode" data-m="login">Retour à la connexion</button>`;
+  if (m === 'reset') o += `<form class="stack" data-submit="resetPw"><label class="field"><span>Nouveau mot de passe (8 caractères min.)</span><input id="fg-pw" type="password" autocomplete="new-password" data-bind="auth.fpw" value="${esc(A.fpw || '')}"></label>
+    <button class="btn btn-gold" type="submit">Changer mon mot de passe</button></form>`;
+  return o + `</div>`;
+}
+function apptRow(a, action){
+  const d = parseD(a.date);
+  return `<button class="appt" data-a="${action}" data-id="${a.id}"><div class="appt-date"><span>${DAYS_S[d.getDay()]}</span><b>${d.getDate()}</b><span>${MONTHS[d.getMonth()]}</span></div>
+    <div class="grow stack-s"><div class="row between"><b>${hTime(a.time)} · ${esc(a.serviceName)}</b></div><div class="small muted">${modeLabel(a.mode)}${a.subId ? ' · abonnement' : ''} · ${eur(apptTotal(a))}</div></div><span class="gold" aria-hidden="true">›</span></button>`;
+}
+function viewAccount(c){
+  const nU = unreadClient(c);
+  let o = `<div class="stack-l"><div class="stack-s"><div class="eyebrow">Mon espace</div><h1 class="h1">Salut ${esc(c.first)}</h1></div>
+    <div class="subtabs"><button data-a="esp" data-v="compte" ${ui.esp === 'compte' ? 'aria-current="page"' : ''}>Mon compte</button><button data-a="esp" data-v="messages" ${ui.esp === 'messages' ? 'aria-current="page"' : ''}>Messages${nU ? `<span class="badge">${nU}</span>` : ''}</button></div>`;
+  return o + (ui.esp === 'messages' ? clientMessages(c) : clientAccount(c)) + `</div>`;
+}
+function clientAccount(c){
+  const s = db.settings;
+  const up = sortAppts(db.appts.filter(a => a.clientId === c.id && isUpcoming(a)));
+  const past = sortAppts(db.appts.filter(a => a.clientId === c.id && a.status === 'done')).reverse();
+  let o = `<section class="stack"><div class="row between"><h2 class="h2">Mes rdv</h2><button class="btn btn-gold btn-sm" data-a="book">Réserver</button></div>
+    ${up.length ? up.map(a => apptRow(a, 'myAppt')).join('') : `<p class="muted">Aucun rdv à venir.</p>`}</section>`;
+  if (s.loyalty.on){
+    const k = past.length, every = Number(s.loyalty.every) || 5, nx = nextLoyalty(k);
+    const remaining = nx ? nx - k - 1 : 0, filled = Math.max(0, every - remaining);
+    o += `<section class="card stack"><div class="row between"><h2 class="h3">Carte fidélité</h2><span class="pill gold">${k} visite${k > 1 ? 's' : ''}</span></div>
+      <div class="stamps" style="grid-template-columns:repeat(${Math.min(every + 1, 6)},1fr)">${Array.from({ length: every }, (_, i) => `<div class="stamp ${i < filled ? 'on' : ''}">${i < filled ? '✓' : i + 1}</div>`).join('')}<div class="stamp gift">−${s.loyalty.pct}%</div></div>
+      <p class="small">${remaining === 0 ? `<b class="gold">Ton prochain rdv est à −${s.loyalty.pct} % !</b>` : `Encore <b>${remaining}</b> visite${remaining > 1 ? 's' : ''} avant ta coupe à −${s.loyalty.pct} %.`}</p></section>`;
+  }
+  if (s.referral.on){
+    const r = refStats(c);
+    o += `<section class="card stack"><h2 class="h3">Parrainage</h2><p class="small muted">Donne ton code à tes potes. Quand ${s.referral.needed} amis ont réservé avec, ta prochaine coupe est à −${s.referral.pct} %.</p>
+      <div class="row between"><span class="code" id="refcode">${esc(c.refCode)}</span><button class="btn btn-sm" data-a="copy" data-t="${esc(c.refCode)}">Copier</button></div>
+      <div class="bar"><i style="width:${Math.min(100, (r.friends % s.referral.needed) / s.referral.needed * 100)}%"></i></div>
+      <p class="small">${r.friends} ami${r.friends > 1 ? 's' : ''} parrainé${r.friends > 1 ? 's' : ''}${r.credits ? ` · <b class="gold">${r.credits} réduction${r.credits > 1 ? 's' : ''} de −${s.referral.pct} % à utiliser</b>` : ''}</p></section>`;
+  }
+  if (s.sub.on){
+    const subs = db.subs.filter(x => x.clientId === c.id && x.status === 'active');
+    o += `<section class="card stack"><h2 class="h3">Abonnement</h2>`;
+    if (!subs.length) o += `<p class="small muted">Pas d'abonnement en cours. Tu peux en choisir un pendant ta réservation : −${eur(s.sub.discount)} par coupe.</p>`;
+    subs.forEach(x => {
+      const list = db.appts.filter(a => a.subId === x.id && a.status !== 'cancelled'), done = list.filter(a => a.status === 'done').length;
+      const next = sortAppts(list.filter(isUpcoming))[0];
+      o += `<div class="stack-s"><b>${esc(svc(x.serviceId)?.name || 'Prestation')} · toutes les ${x.freq > 1 ? x.freq + ' ' : ''}semaine${x.freq > 1 ? 's' : ''}</b><p class="small muted">Jusqu'au ${dayLong(x.end)} · ${done} / ${list.length} rdv faits</p>
+        <div class="bar"><i style="width:${list.length ? done / list.length * 100 : 0}%"></i></div>${next ? `<p class="small">Prochain : ${dayLong(next.date)} à ${hTime(next.time)}</p>` : ''}
+        <button class="btn btn-ghost btn-sm" data-a="subStop" data-id="${x.id}">Arrêter mon abonnement</button></div>`;
+    });
+    o += `</section>`;
+  }
+  const svcsStu = activeServices().filter(x => x.student);
+  if (svcsStu.length){
+    const st = c.student || { status: 'none' };
+    o += `<section class="card stack"><div class="row between"><h2 class="h3">Statut étudiant</h2>${{ ok: '<span class="pill ok">Validé</span>', pending: '<span class="pill warn">En attente</span>', refused: '<span class="pill bad">Refusé</span>', none: '' }[st.status] || ''}</div>`;
+    if (st.status === 'ok') o += `<p class="small">Tes prix étudiants s'appliquent automatiquement : ${svcsStu.map(x => esc(x.name) + ' ' + eur(x.student)).join(' · ')}.</p>`;
+    else if (st.status === 'pending') o += `<p class="small muted">Je vérifie ton justificatif. Tu recevras un message dès que c'est fait.</p>`;
+    else {
+      if (st.status === 'refused') o += `<p class="small">Motif : ${esc(st.reason || 'non précisé')}. Tu peux renvoyer un justificatif.</p>`;
+      o += `<p class="small muted">Envoie une photo de ta carte étudiante ou de ton certificat de scolarité de cette année.</p>`;
+      o += ui.stuProof ? `<img class="thumb" src="${ui.stuProof}" alt="Justificatif"><div class="grid2"><button class="btn btn-ghost" data-a="stuClear">Changer</button><button class="btn btn-gold" data-a="stuSend">Envoyer</button></div>`
+        : `<label class="upload"><input type="file" accept="image/*" data-upload="ui:stuProof" data-max="1200"><b>Photo du justificatif</b></label>`;
+    }
+    o += `</section>`;
+  }
+  const mine = db.reviews.filter(r => r.clientId === c.id);
+  o += `<section class="card stack"><h2 class="h3">Donner un avis</h2><div class="rate" role="radiogroup" aria-label="Note">${[1, 2, 3, 4, 5].map(n => `<button class="${n <= ui.rv.stars ? 'on' : ''}" data-a="rvStar" data-n="${n}" aria-label="${n} étoile${n > 1 ? 's' : ''}">★</button>`).join('')}</div>
+    <label class="field"><span>Ton avis</span><textarea id="rv-text" data-bind="rv.text" placeholder="Comment s'est passée ta coupe ?">${esc(ui.rv.text)}</textarea></label>
+    <div class="grid2"><button class="chip" data-a="rvPub" data-v="1" aria-pressed="${ui.rv.pub}">Public</button><button class="chip" data-a="rvPub" data-v="0" aria-pressed="${!ui.rv.pub}">Privé</button></div>
+    <p class="tiny muted">${ui.rv.pub ? 'Visible sur la page d\'accueil (à partir de 4★) avec ton prénom et l\'initiale de ton nom.' : 'Seul le coiffeur le lira.'}</p>
+    <button class="btn btn-gold" data-a="rvSend">Envoyer mon avis</button>
+    ${mine.length ? `<hr class="sep">${mine.map(r => `<div class="stack-s">${stars(r.stars)}<p class="small">${esc(r.text)}</p><span class="tiny muted">${r.public ? 'Public' : 'Privé'} · ${dayShort(r.at.slice(0, 10))}</span></div>`).join('')}` : ''}</section>`;
+  if (past.length) o += `<details class="card"><summary class="h3">Historique (${past.length})</summary><div class="list">${past.map(a => `<div class="li"><div class="grow"><div class="li-t">${dayShort(a.date)} · ${esc(a.serviceName)}</div><div class="small muted">${modeLabel(a.mode)}</div></div><span class="num">${eur(apptTotal(a))}</span></div>`).join('')}</div></details>`;
+  o += `<section class="card stack-s"><h2 class="h3">Mes infos</h2><dl class="kv"><dt>E-mail</dt><dd>${esc(c.email)}</dd><dt>Téléphone</dt><dd class="num">${fmtPhone(c.phone)}</dd></dl>
+    <button class="btn btn-ghost" data-a="logout" style="margin-top:8px">Me déconnecter</button></section>`;
+  return o;
+}
+function lateAppts(c){ const h = db.settings.cancelHours; return sortAppts(db.appts.filter(a => a.clientId === c.id && isUpcoming(a) && (apptStart(a) - Date.now()) / 3600000 < h)); }
+function clientMessages(c){
+  const msgs = db.messages.filter(m => m.clientId === c.id).sort((a, b) => a.at.localeCompare(b.at));
+  const late = lateAppts(c).filter(a => !db.messages.some(m => m.apptId === a.id && m.kind === 'cancel'));
+  let o = `<p class="small muted">Écris-moi ici pour une question, un retard ou un changement. Je te réponds dès que possible.</p>`;
+  if (late.length) o += `<div class="card line stack"><p class="small">Il est trop tard pour annuler toi-même (moins de ${db.settings.cancelHours} h avant). Tu peux me le demander :</p>${late.map(a => `<button class="btn btn-sm" data-a="askCancel" data-id="${a.id}">Demander l'annulation · ${dayShort(a.date)} ${hTime(a.time)}</button>`).join('')}</div>`;
+  o += `<div class="thread">${msgs.length ? msgs.map(m => msgBubble(m, m.from === 'client')).join('') : `<p class="muted" style="text-align:center">Pas encore de message.</p>`}</div>
+    <div class="composer"><textarea id="cm-text" data-bind="cmText" placeholder="Ton message…" aria-label="Ton message">${esc(ui.cmText || '')}</textarea><button class="btn btn-gold" data-a="cmSend">Envoyer</button></div>`;
+  return o;
+}
+function msgBubble(m, mine){
+  if (m.kind === 'cancel' || m.auto) return `<div class="msg sys">${esc(m.text)}<div class="tiny">${ago(m.at)}</div></div>`;
+  return `<div class="msg ${mine ? 'me' : ''}">${esc(m.text)}<div class="tiny">${ago(m.at)}</div></div>`;
+}
+function apptDetailClient(a){
+  const s = db.settings, hrs = (apptStart(a) - Date.now()) / 3600000, can = hrs >= s.cancelHours;
+  const asked = db.messages.some(m => m.apptId === a.id && m.kind === 'cancel');
+  return `<div class="grab"></div><div class="label">${a.subId ? 'Rdv de ton abonnement' : 'Ton rdv'}</div><h3 class="h2">${dayLong(a.date)} · ${hTime(a.time)}</h3>
+    <dl class="kv"><dt>Prestation</dt><dd>${esc(a.serviceName)} · ${a.duration} min</dd><dt>Où</dt><dd>${a.mode === 'domicile' ? esc(addrStr(a.address)) + (a.address?.info ? '<br><span class="small muted">' + esc(a.address.info) + '</span>' : '') : 'Au salon' + (salonStr() ? '<br><span class="small muted">' + esc(salonStr()) + '</span>' : '')}</dd>
+    ${a.detail ? `<dt>Détail</dt><dd>${esc(a.detail)}</dd>` : ''}${a.payment ? `<dt>Paiement</dt><dd>${esc(a.payment)}</dd>` : ''}</dl>
+    <div class="card lines">${a.override != null && a.override !== '' ? `<div class="row small"><span>Prix fixé par le coiffeur</span><span>${eur(a.override)}</span></div>` : a.price.lines.map(l => `<div class="row small"><span>${esc(l.label)}</span><span class="num">${eur(l.amount)}</span></div>`).join('')}<hr class="sep"><div class="row"><b>Total</b><b class="gold">${eur(apptTotal(a))}</b></div></div>
+    ${a.photo ? `<img class="thumb" src="${imgSrc('coupes', a.photo)}" alt="Coupe voulue">` : ''}
+    <a class="btn" href="${gcalUrl(a)}" target="_blank" rel="noopener">Ajouter à Google Agenda</a>
+    ${a.mode === 'salon' && salonStr() ? `<a class="btn" href="${mapsUrl(salonStr())}" target="_blank" rel="noopener">Itinéraire vers le salon</a>` : ''}
+    ${can ? `<button class="btn btn-danger" data-a="myCancel" data-id="${a.id}">Annuler ce rdv</button><p class="tiny muted">Annulation possible jusqu'au ${(dl => dayShort(ds(dl)) + ' à ' + pad(dl.getHours()) + 'h' + pad(dl.getMinutes()))(new Date(apptStart(a) - s.cancelHours * 3600000))}.</p>`
+      : asked ? `<p class="small muted">Ta demande d'annulation est envoyée. Je te réponds dans tes messages.</p>` : `<p class="small muted">Il reste moins de ${s.cancelHours} h : tu ne peux plus annuler toi-même.</p><button class="btn" data-a="askCancel" data-id="${a.id}">Demander l'annulation</button>`}
+    <button class="btn btn-ghost" data-a="closeModal">Fermer</button>`;
+}
+
+/* ===================== Espace coiffeur ===================== */
+const BT = [['agenda', 'Agenda'], ['etudiants', 'Étudiants'], ['messages', 'Messages'], ['clients', 'Clients'], ['portefeuille', 'Portefeuille'], ['comptes', 'Comptes'],
+  ['accueil', 'Page d\'accueil'], ['reglages', 'Réglages'], ['attente', 'Attente'], ['avis', 'Avis'], ['dispos', 'Dispos'], ['tarifs', 'Tarifs'], ['gains', 'Gains']];
+function viewBarber(){
+  if (!isAdmin) return viewAdminLogin();
+  const n = { agenda: newAppts().length, etudiants: pendingStudents().length, messages: unreadBarber(), attente: waitingList().filter(w => w.status === 'waiting').length };
+  let o = `<div class="stack"><div class="row between"><div class="eyebrow">Espace coiffeur</div><button class="btn btn-ghost btn-sm" data-a="lockBarber">Verrouiller</button></div>
+    <div class="chips-scroll" id="bchips">${BT.map(([k, l]) => `<button class="bchip" data-a="bt" data-t="${k}" ${ui.bt === k ? 'aria-current="page"' : ''}>${l}${n[k] ? `<span class="badge">${n[k]}</span>` : ''}</button>`).join('')}</div>`;
+  if (db.demo && ui.bt === 'agenda') o += `<div class="card line row between"><p class="small grow">Des exemples sont chargés pour te montrer l'app.</p><button class="btn btn-sm" data-a="demoClear">Effacer</button></div>`;
+  const f = { agenda: bAgenda, etudiants: bStudents, messages: bMessages, clients: bClients, portefeuille: bWallet, comptes: bAccounts, accueil: bHomeEditor,
+    reglages: bSettings, attente: bWait, avis: bReviews, dispos: bDispos, tarifs: bPrices, gains: bGains }[ui.bt] || bAgenda;
+  return o + `<div class="stack-l" style="padding-top:8px">${f()}</div></div>`;
+}
+function viewAdminLogin(){
+  const A = ui.auth;
+  return `<div class="stack-l" style="padding-top:20px"><div class="stack-s" style="text-align:center"><div class="eyebrow" style="justify-content:center">Espace coiffeur</div><h1 class="h1">Connexion</h1><p class="muted">Réservé à ton compte coiffeur.</p></div>
+    <form class="stack" data-submit="adminLogin"><label class="field"><span>E-mail</span><input id="adm-email" type="email" autocomplete="username" autocapitalize="none" data-bind="auth.aid" value="${esc(A.aid || '')}"></label>
+    <label class="field"><span>Mot de passe</span><input id="adm-pw" type="password" autocomplete="current-password" data-bind="auth.apw" value=""></label>
+    <button class="btn btn-gold" type="submit">Me connecter</button></form></div>`;
+}
+const statusPill = a => { const m = { booked: ['À venir', 'gold'], done: ['Fait', 'ok'], cancelled: ['Annulé', 'bad'], noshow: ['Absent', 'warn'] }[a.status] || ['?', '']; return `<span class="pill ${m[1]}">${m[0]}</span>`; };
+const telBtns = c => c && c.phone ? `<div class="grid2"><a class="btn btn-sm" style="width:100%" target="_blank" rel="noopener" href="tel:${c.phone}">Appeler</a><a class="btn btn-sm" style="width:100%" target="_blank" rel="noopener" href="sms:${c.phone}">SMS</a></div><p class="small muted">Tél. : <span class="num" style="user-select:all">${fmtPhone(c.phone)}</span></p>` : '';
+
+/* Agenda */
+function bAgenda(){
+  const f = ui.ag, now = new Date();
+  let list = db.appts.filter(a => f === 'all' ? true : f === 'cancelled' ? a.status === 'cancelled' : f === 'past' ? a.status !== 'cancelled' && apptStart(a) <= now : a.status === 'booked' && apptStart(a) > now);
+  list = sortAppts(list); if (f === 'past' || f === 'cancelled') list.reverse();
+  const fresh = new Set(newAppts().map(a => a.id));
+  let o = `<div class="row between"><h2 class="h2">Agenda</h2><button class="btn btn-gold btn-sm" data-a="apptNew">+ Rdv</button></div>
+    <div class="chipset">${[['upcoming', 'À venir'], ['past', 'Passés'], ['cancelled', 'Annulés'], ['all', 'Tout']].map(([k, l]) => `<button class="chip" data-a="agF" data-f="${k}" aria-pressed="${f === k}">${l}</button>`).join('')}</div>`;
+  if (!list.length) o += `<p class="muted">Aucun rdv ici.</p>`;
+  let cur = '';
+  o += `<div class="list">`;
+  list.forEach(a => {
+    if (a.date !== cur){ cur = a.date; o += `<div class="daytitle">${a.date === today() ? 'Aujourd\'hui · ' : ''}${dayLong(a.date)}</div>`; }
+    const c = cById(a.clientId);
+    o += `<button class="li" data-a="apptEdit" data-id="${a.id}"><span class="time">${hTime(a.time)}</span><div class="grow"><div class="li-t">${esc(cName(c))} ${fresh.has(a.id) ? '<span class="pill gold">Nouveau</span>' : ''}</div><div class="small muted">${esc(a.serviceName)} · ${modeLabel(a.mode)}${a.mode === 'domicile' && a.address ? ' · ' + esc(a.address.city) : ''}${a.subId ? ' · abo' : ''}</div></div><div class="ta-r stack-s"><b class="num">${eur(apptTotal(a))}</b>${statusPill(a)}</div></button>`;
+  });
+  o += `</div>`;
+  if (fresh.size){ db.appts.forEach(a => { if (fresh.has(a.id)) a.seen = true; }); save(); setTimeout(() => { $('#top').innerHTML = viewTop(); }, 0); }
+  return o;
+}
+function apptEditor(a){
+  const c = cById(a.clientId), services = db.settings.services;
+  return `<div class="grab"></div><div class="row between"><h3 class="h2">${esc(cName(c))}</h3>${statusPill(a)}</div>${telBtns(c)}
+    <div class="grid2"><label class="field"><span>Date</span><input id="ae-date" type="date" value="${a.date}"></label><label class="field"><span>Heure</span><input id="ae-time" type="time" step="300" value="${a.time}"></label></div>
+    <label class="field"><span>Prestation</span><select id="ae-svc">${services.map(x => `<option value="${x.id}" ${x.id === a.serviceId ? 'selected' : ''}>${esc(x.name)} · ${x.duration} min</option>`).join('')}</select></label>
+    <div class="grid2"><label class="field"><span>Lieu</span><select id="ae-mode"><option value="salon" ${a.mode === 'salon' ? 'selected' : ''}>Salon</option><option value="domicile" ${a.mode === 'domicile' ? 'selected' : ''}>Domicile</option></select></label>
+    <label class="field"><span>Statut</span><select id="ae-status">${[['booked', 'À venir'], ['done', 'Fait'], ['noshow', 'Absent'], ['cancelled', 'Annulé']].map(([k, l]) => `<option value="${k}" ${a.status === k ? 'selected' : ''}>${l}</option>`).join('')}</select></label></div>
+    <div class="card lines">${a.price.lines.map(l => `<div class="row small"><span>${esc(l.label)}</span><span class="num">${eur(l.amount)}</span></div>`).join('')}<hr class="sep"><div class="row"><span>Prix calculé</span><b>${eur(a.price.total)}</b></div></div>
+    <label class="field"><span>Imposer un prix (€) · laisse vide pour le prix calculé</span><input id="ae-override" inputmode="decimal" value="${a.override ?? ''}" placeholder="${fr1(a.price.total)}"></label>
+    ${a.mode === 'domicile' && a.address ? `<div class="card stack-s"><div class="label">Adresse</div><p>${esc(addrStr(a.address))}</p>${a.address.info ? `<p class="small muted">${esc(a.address.info)}</p>` : ''}<a class="btn btn-sm" href="${mapsUrl(addrStr(a.address))}" target="_blank" rel="noopener">Itinéraire</a></div>` : ''}
+    ${a.detail ? `<div class="card stack-s"><div class="label">Détail du client</div><p>${esc(a.detail)}</p></div>` : ''}${a.photo ? `<img class="thumb" src="${imgSrc('coupes', a.photo)}" alt="Coupe voulue">` : ''}
+    <p class="tiny muted">${a.payment ? 'Paiement prévu : ' + esc(a.payment) + ' · ' : ''}${a.refCode ? 'Code parrainage : ' + esc(a.refCode) + ' · ' : ''}Réservé le ${dayShort(a.createdAt.slice(0, 10))}</p>
+    <button class="btn btn-gold" data-a="apptSave" data-id="${a.id}">Enregistrer</button>
+    <div class="grid2"><button class="btn" data-a="openWallet" data-id="${a.clientId}">Fiche client</button><button class="btn btn-danger" data-a="apptDel" data-id="${a.id}">Supprimer</button></div>`;
+}
+function apptNewForm(){
+  const d = ui.na || (ui.na = { first: '', last: '', phone: '', svc: activeServices()[0]?.id, mode: 'salon', date: today(), time: '10:00', addr: '' });
+  return `<div class="grab"></div><h3 class="h2">Nouveau rdv</h3><p class="small muted">Pour un client qui t'a appelé. Si son numéro est connu, sa fiche est reprise.</p>
+    <div class="grid2"><label class="field"><span>Prénom</span><input id="na-first" data-bind="na.first" value="${esc(d.first)}"></label><label class="field"><span>Nom</span><input id="na-last" data-bind="na.last" value="${esc(d.last)}"></label></div>
+    <label class="field"><span>Téléphone</span><input id="na-phone" type="tel" inputmode="tel" data-bind="na.phone" value="${esc(d.phone)}"></label>
+    <label class="field"><span>Prestation</span><select id="na-svc" data-bind="na.svc">${activeServices().map(x => `<option value="${x.id}" ${x.id === d.svc ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select></label>
+    <div class="grid2"><label class="field"><span>Date</span><input id="na-date" type="date" data-bind="na.date" value="${d.date}"></label><label class="field"><span>Heure</span><input id="na-time" type="time" step="300" data-bind="na.time" value="${d.time}"></label></div>
+    <label class="field"><span>Lieu</span><select id="na-mode" data-bind="na.mode"><option value="salon" ${d.mode === 'salon' ? 'selected' : ''}>Salon</option><option value="domicile" ${d.mode === 'domicile' ? 'selected' : ''}>Domicile</option></select></label>
+    <label class="field"><span>Adresse si domicile (rue, code postal, ville)</span><input id="na-addr" data-bind="na.addr" value="${esc(d.addr)}" placeholder="5 rue des Vosges, 68100 Mulhouse"></label>
+    <button class="btn btn-gold" data-a="apptCreate">Créer le rdv</button><button class="btn btn-ghost" data-a="closeModal">Annuler</button>`;
+}
+
+/* Étudiants */
+function bStudents(){
+  const pend = pendingStudents(), ok = db.clients.filter(c => c.student?.status === 'ok'), ref = db.clients.filter(c => c.student?.status === 'refused');
+  let o = `<h2 class="h2">Demandes étudiant</h2>`;
+  o += pend.length ? pend.map(c => `<div class="card stack"><div class="row between"><b>${esc(cName(c))}</b><span class="small muted">${ago(c.student.date)}</span></div>
+    ${c.student.proof ? `<img class="proof" src="${imgSrc('justificatifs', c.student.proof)}" alt="Justificatif de ${esc(c.first)}">` : ''}
+    <div class="grid2"><button class="btn btn-danger" data-a="stuRefuse" data-id="${c.id}">Refuser</button><button class="btn btn-gold" data-a="stuOk" data-id="${c.id}">Valider</button></div></div>`).join('') : `<p class="muted">Aucune demande en attente.</p>`;
+  if (ok.length) o += `<div class="card stack-s"><div class="label">Validés (${ok.length})</div><div class="list">${ok.map(c => `<div class="li"><span class="grow">${esc(cName(c))}</span><button class="btn btn-sm btn-ghost" data-a="stuRevoke" data-id="${c.id}">Retirer</button></div>`).join('')}</div></div>`;
+  if (ref.length) o += `<div class="card stack-s"><div class="label">Refusés</div>${ref.map(c => `<p class="small"><b>${esc(cName(c))}</b> · ${esc(c.student.reason || '')}</p>`).join('')}</div>`;
+  return o;
+}
+
+/* Messages */
+function convList(){
+  const by = {};
+  db.messages.forEach(m => { (by[m.clientId] = by[m.clientId] || []).push(m); });
+  return Object.entries(by).map(([id, ms]) => { ms.sort((a, b) => a.at.localeCompare(b.at)); return { c: cById(id), id, last: ms[ms.length - 1], unread: ms.filter(m => m.from === 'client' && !m.readBarber).length, cancel: ms.some(m => m.kind === 'cancel' && !m.handled) }; })
+    .filter(x => x.c).sort((a, b) => b.last.at.localeCompare(a.last.at));
+}
+function bMessages(){
+  if (ui.conv && cById(ui.conv)) return bThread(cById(ui.conv));
+  const list = convList();
+  let o = `<h2 class="h2">Messages</h2>`;
+  if (!list.length) return o + `<p class="muted">Aucune conversation. Pour écrire à un client, ouvre sa fiche dans Portefeuille.</p>`;
+  return o + `<div class="list">${list.map(x => `<button class="li" data-a="convOpen" data-id="${x.id}"><div class="grow"><div class="row"><span class="li-t">${esc(cName(x.c))}</span>${x.cancel ? '<span class="pill bad">Annulation</span>' : ''}${x.c.hasAccount ? '' : '<span class="pill">Sans compte</span>'}</div><div class="small muted" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.last.from === 'barber' ? 'Toi : ' : ''}${esc(x.last.text)}</div></div><div class="ta-r stack-s"><span class="tiny muted">${ago(x.last.at)}</span>${x.unread ? `<span class="badge">${x.unread}</span>` : ''}</div></button>`).join('')}</div>`;
+}
+function bThread(c){
+  const msgs = db.messages.filter(m => m.clientId === c.id).sort((a, b) => a.at.localeCompare(b.at));
+  const up = sortAppts(db.appts.filter(a => a.clientId === c.id && isUpcoming(a)));
+  return `<button class="back" data-a="convBack">‹ Conversations</button><div class="row between"><h2 class="h2">${esc(cName(c))}</h2>${c.hasAccount ? '' : '<span class="pill">Sans compte</span>'}</div>${telBtns(c)}
+    ${!c.hasAccount ? `<p class="small muted">Ce client n'a pas de compte : il ne verra pas ta réponse dans l'app. Appelle-le ou envoie un SMS.</p>` : ''}
+    ${up.length ? `<div class="card stack-s"><div class="label">Ses rdv à venir</div>${up.map(a => `<div class="row between"><span class="small">${dayShort(a.date)} · ${hTime(a.time)} · ${esc(a.serviceName)}</span><button class="btn btn-sm btn-danger" data-a="bCancelAppt" data-id="${a.id}">Annuler</button></div>`).join('')}</div>` : ''}
+    <div class="thread">${msgs.map(m => msgBubble(m, m.from === 'barber')).join('')}</div>
+    <div class="chipset">${db.templates.map((t, i) => `<button class="chip" data-a="tplUse" data-i="${i}" data-target="bm-text" data-c="${c.id}">${esc(t.slice(0, 22))}…</button>`).join('')}</div>
+    <div class="composer"><textarea id="bm-text" data-bind="bmText" placeholder="Ta réponse…" aria-label="Ta réponse">${esc(ui.bmText || '')}</textarea><button class="btn btn-gold" data-a="bmSend" data-id="${c.id}">Envoyer</button></div>`;
+}
+
+/* Clients */
+function bClients(){
+  const list = db.clients.slice().sort((a, b) => cName(a).localeCompare(cName(b)));
+  let o = `<div class="row between"><h2 class="h2">Clients</h2><span class="pill">${list.length}</span></div>`;
+  if (!list.length) return o + `<p class="muted">Tes clients apparaîtront ici dès leur première réservation.</p>`;
+  return o + `<div class="list">${list.map(c => {
+    const n = db.appts.filter(a => a.clientId === c.id && a.status !== 'cancelled').length;
+    return `<button class="li" data-a="openWallet" data-id="${c.id}"><div class="grow"><div class="row wrap"><span class="li-t">${esc(cName(c))}</span>${c.hasAccount ? '<span class="pill gold">Compte</span>' : ''}${studentOK(c) ? '<span class="pill ok">Étudiant</span>' : ''}</div><div class="small muted num">${fmtPhone(c.phone)} · ${n} rdv</div></div><span class="gold">›</span></button>`;
+  }).join('')}</div>`;
+}
+
+/* Portefeuille */
+function pfList(){
+  const q = slug(ui.pfq), qp = normPhone(ui.pfq);
+  const list = db.clients.filter(c => !q || slug(cName(c)).includes(q) || (qp.length > 1 && c.phone.includes(qp)) || (c.email || '').toLowerCase().includes(String(ui.pfq).trim().toLowerCase())).sort((a, b) => cName(a).localeCompare(cName(b)));
+  if (!list.length) return `<p class="muted">Aucun client trouvé.</p>`;
+  return list.map(c => { const st = clientStats(c); return `<button class="li" data-a="openWallet" data-id="${c.id}"><div class="grow"><div class="li-t">${esc(cName(c))}</div><div class="small muted">${c.hasAccount ? 'Avec compte' : 'Sans compte'} · ${st.count} rdv · ${eur(st.paid)} encaissé</div></div><span class="gold">›</span></button>`; }).join('');
+}
+function clientStats(c){
+  const list = db.appts.filter(a => a.clientId === c.id), live = list.filter(a => a.status !== 'cancelled');
+  const done = list.filter(a => a.status === 'done'), up = list.filter(isUpcoming);
+  const paid = sum(done.map(apptTotal)), upc = sum(up.map(apptTotal));
+  const fav = {}; live.forEach(a => fav[a.serviceName] = (fav[a.serviceName] || 0) + 1);
+  const favName = Object.entries(fav).sort((a, b) => b[1] - a[1])[0];
+  return { list, done, up, paid, upc, avg: done.length ? paid / done.length : 0, disc: sum(live.map(a => a.price?.discount || 0)), fav: favName ? favName[0] : '—', count: live.length };
+}
+function bWallet(){
+  if (ui.pf && cById(ui.pf)) return walletCard(cById(ui.pf));
+  return `<h2 class="h2">Portefeuille clients</h2><label class="field"><span>Rechercher (nom, téléphone, e-mail)</span><input id="pf-q" type="search" value="${esc(ui.pfq)}" placeholder="Ex. : Yanis ou 0612…"></label><div class="list" id="pf-list">${pfList()}</div>`;
+}
+function walletCard(c){
+  const s = db.settings, st = clientStats(c), idx = db.clients.indexOf(c), r = refStats(c);
+  const subs = db.subs.filter(x => x.clientId === c.id);
+  const waits = db.waitlist.filter(w => w.clientId === c.id);
+  const revs = db.reviews.filter(x => x.clientId === c.id);
+  const k = st.done.length, nx = nextLoyalty(k);
+  const twin = c.userId ? db.clients.find(x => x !== c && !x.userId && !x.hasAccount && x.phone === c.phone) : null;
+  const addrs = c.addresses.slice(); db.appts.forEach(a => { if (a.clientId === c.id && a.address && !addrs.some(x => x.street === a.address.street)) addrs.push(a.address); });
+  return `<button class="back" data-a="pfBack">‹ Tous les clients</button>
+    <div class="stack-s"><div class="row wrap"><h2 class="h2">${esc(cName(c))}</h2>${c.hasAccount ? '<span class="pill gold">Compte</span>' : '<span class="pill">Sans compte</span>'}${studentOK(c) ? '<span class="pill ok">Étudiant</span>' : ''}</div>
+    <p class="small muted">Client depuis le ${dayShort(c.createdAt.slice(0, 10))}${c.email ? ' · ' + esc(c.email) : ''}${c.refCode ? ' · code ' + esc(c.refCode) : ''}</p></div>
+    ${telBtns(c)}
+    <div class="grid2"><div class="stat"><span class="label">Encaissé</span><b>${eur(st.paid)}</b></div><div class="stat"><span class="label">À venir</span><b>${eur(st.upc)}</b></div>
+    <div class="stat"><span class="label">Panier moyen</span><b>${eur(st.avg)}</b></div><div class="stat"><span class="label">Réductions</span><b>${eur(st.disc)}</b></div>
+    <div class="stat"><span class="label">Rdv</span><b>${st.count}</b></div><div class="stat"><span class="label">Préférée</span><b style="font-size:19px">${esc(st.fav)}</b></div></div>
+    <div class="card stack-s"><div class="label">Fidélité et parrainage</div>${c.hasAccount ? `<p class="small">${k} visite${k > 1 ? 's' : ''} faite${k > 1 ? 's' : ''}${s.loyalty.on && nx ? ` · réduction au ${nx}e rdv` : ''}</p><p class="small">${r.friends} filleul${r.friends > 1 ? 's' : ''} · ${r.credits} réduction${r.credits > 1 ? 's' : ''} parrainage dispo</p>` : `<p class="small muted">Pas de compte : la fidélité ne compte pas.</p>`}</div>
+    ${subs.length ? `<div class="card stack-s"><div class="label">Abonnement</div>${subs.map(x => { const l = db.appts.filter(a => a.subId === x.id && a.status !== 'cancelled'); return `<p class="small"><b>${esc(svc(x.serviceId)?.name || '')}</b> · toutes les ${x.freq} sem. · ${l.filter(a => a.status === 'done').length}/${l.length} faits · ${x.status === 'active' ? '<span class="pill ok">Actif</span>' : '<span class="pill">Arrêté</span>'}</p>`; }).join('')}</div>` : ''}
+    ${addrs.length ? `<div class="card stack-s"><div class="label">Adresses</div>${addrs.map(a => `<div class="row between"><div class="grow small">${esc(addrStr(a))}${a.info ? `<br><span class="muted">${esc(a.info)}</span>` : ''}</div><a class="btn btn-sm" href="${mapsUrl(addrStr(a))}" target="_blank" rel="noopener">Itinéraire</a></div>`).join('')}</div>` : ''}
+    <details class="card" ${st.list.length < 6 ? 'open' : ''}><summary class="h3">Historique (${st.list.length})</summary><div class="list">${sortAppts(st.list.slice()).reverse().map(a => `<button class="li" data-a="apptEdit" data-id="${a.id}"><div class="grow"><div class="li-t small">${dayShort(a.date)} · ${hTime(a.time)} · ${esc(a.serviceName)}</div><div class="tiny muted">${modeLabel(a.mode)}</div></div><div class="ta-r stack-s"><span class="num small">${eur(apptTotal(a))}</span>${statusPill(a)}</div></button>`).join('') || '<p class="muted small">Aucun rdv.</p>'}</div></details>
+    ${revs.length ? `<div class="card stack-s"><div class="label">Avis</div>${revs.map(x => `<div>${stars(x.stars)} <span class="tiny muted">${x.public ? 'public' : 'privé'}</span><p class="small">${esc(x.text)}</p></div>`).join('')}</div>` : ''}
+    ${waits.length ? `<div class="card stack-s"><div class="label">Liste d'attente</div>${waits.map(w => `<p class="small">${dayShort(w.date)} · ${w.status === 'waiting' ? 'en attente' : w.status === 'notified' ? 'prévenu' : 'réglé'}</p>`).join('')}</div>` : ''}
+    <label class="field"><span>Notes privées (lui ne les voit pas)</span><textarea id="pf-notes" data-set="clients.${idx}.notes" placeholder="Ex. : dégradé bas, allergie, préfère le samedi…">${esc(c.notes || '')}</textarea></label>
+    <div class="card stack"><div class="label">Lui écrire</div>${c.hasAccount ? `<div class="chipset">${db.templates.map((t, i) => `<button class="chip" data-a="tplUse" data-i="${i}" data-target="pf-msg" data-c="${c.id}">${esc(t.slice(0, 22))}…</button>`).join('')}</div>
+      <textarea id="pf-msg" placeholder="Ton message…"></textarea><button class="btn btn-gold" data-a="pfSend" data-id="${c.id}">Envoyer dans l'app</button>` : `<p class="small muted">Sans compte, il ne voit pas les messages de l'app. Utilise le bouton SMS.</p>`}</div>
+    ${twin ? `<div class="card line stack"><p class="small">Une fiche sans compte a le même numéro (${clientStats(twin).count} rdv). Rattache-la pour garder son historique et sa fidélité.</p><button class="btn" data-a="clientMerge" data-from="${twin.id}" data-to="${c.id}">Rattacher la fiche sans compte</button></div>` : ''}
+    <button class="btn btn-danger" data-a="clientDel" data-id="${c.id}">Supprimer cette fiche et ses rdv</button>`;
+}
+
+/* Comptes */
+function bAccounts(){
+  const acc = db.clients.filter(c => c.hasAccount).sort((a, b) => (b.accountAt || '').localeCompare(a.accountAt || ''));
+  let o = `<div class="row between"><h2 class="h2">Comptes clients</h2><span class="pill">${acc.length}</span></div><p class="small muted">Les mots de passe ne sont jamais affichés. Tu peux envoyer à un client un lien pour en choisir un nouveau.</p>`;
+  o += acc.length ? `<div class="list">${acc.map(c => `<div class="li"><div class="grow"><div class="li-t">${esc(cName(c))}</div><div class="small muted">${esc(c.email || '')} · <span class="num">${fmtPhone(c.phone)}</span></div><div class="tiny muted">Créé le ${dayShort((c.accountAt || c.createdAt).slice(0, 10))} · ${db.appts.filter(a => a.clientId === c.id && a.status !== 'cancelled').length} rdv</div></div>
+    <div class="stack-s"><button class="btn btn-sm" data-a="composeTo" data-id="${c.id}">Écrire</button><button class="btn btn-sm btn-ghost" data-a="pwReset" data-id="${c.id}">Mot de passe</button></div></div>`).join('')}</div>` : `<p class="muted">Aucun compte pour l'instant.</p>`;
+  o += `<div class="card stack"><h3 class="h3">Messages types</h3><p class="small muted">{prenom} est remplacé par le prénom du client.</p>
+    ${db.templates.map((t, i) => `<div class="stack-s"><textarea id="tpl-${i}" data-set="templates.${i}" style="min-height:76px">${esc(t)}</textarea><button class="link" data-a="tplDel" data-i="${i}" style="align-self:flex-end">Supprimer</button></div>`).join('')}
+    <button class="btn" data-a="tplAdd">+ Ajouter un message type</button></div>`;
+  return o;
+}
+
+/* Éditeur de la page d'accueil */
+function edField(label, path, opts = {}){
+  const v = getPath(db, path) ?? '';
+  const id = 'ed-' + path.replace(/\./g, '-');
+  return opts.area ? `<label class="field"><span>${label}</span><textarea id="${id}" data-set="${path}">${esc(v)}</textarea></label>`
+    : `<label class="field"><span>${label}</span><input id="${id}" data-set="${path}" value="${esc(v)}" ${opts.num ? 'inputmode="decimal" data-num' : ''} ${opts.ph ? `placeholder="${esc(opts.ph)}"` : ''}></label>`;
+}
+function edToggle(label, path, rr){ return `<label class="toggle-row"><span>${label}</span><input type="checkbox" id="ed-${path.replace(/\./g, '-')}" data-set="${path}" ${rr ? 'data-rr' : ''} ${getPath(db, path) ? 'checked' : ''}></label>`; }
+function edSection(title, inner, open){ return `<details class="card" ${open ? 'open' : ''}><summary class="h3">${title}</summary><div class="stack">${inner}</div></details>`; }
+function bHomeEditor(){
+  const h = db.home;
+  return `<div class="row between"><h2 class="h2">Page d'accueil</h2><button class="btn btn-sm" data-a="tab" data-t="home">Voir</button></div><p class="small muted">Chaque modification s'affiche tout de suite côté client.</p>
+  ${edSection('En-tête', `<div class="row">${avatar()}<div class="stack-s grow"><label class="btn btn-sm" style="width:100%">Changer la photo<input type="file" accept="image/*" data-upload="db:home.logo" data-max="400" hidden></label>${h.logo ? `<button class="link" data-a="imgDel" data-p="home.logo">Enlever</button>` : ''}</div></div>
+    ${edField('Ton prénom', 'home.name')}${edField('Ligne dorée', 'home.tagline')}`, true)}
+  ${edSection(`Carrousel (${h.slides.length}/4)`, h.slides.map((sl, i) => `<div class="ed-slide"><img src="${sl.img || placeholder(i)}" alt=""><div class="stack-s grow">
+      <label class="field"><span>Légende</span><input id="ed-slide-${i}" data-set="home.slides.${i}.caption" value="${esc(sl.caption)}"></label>
+      <div class="row wrap"><label class="btn btn-sm">Photo<input type="file" accept="image/*" data-upload="db:home.slides.${i}.img" data-max="1100" hidden></label>
+      <button class="btn btn-sm btn-ghost" data-a="slideMove" data-i="${i}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Monter">↑</button><button class="btn btn-sm btn-ghost" data-a="slideMove" data-i="${i}" data-d="1" ${i === h.slides.length - 1 ? 'disabled' : ''} aria-label="Descendre">↓</button>
+      <button class="btn btn-sm btn-danger" data-a="slideDel" data-i="${i}" aria-label="Supprimer">✕</button></div></div></div>`).join('') + (h.slides.length < 4 ? `<button class="btn" data-a="slideAdd">+ Ajouter une photo</button>` : ''))}
+  ${edSection('Texte principal', edField('Petite ligne dorée', 'home.eyebrow') + edField('Grand titre', 'home.title') + edField('Texte d\'intro', 'home.intro', { area: true }) + edField('Bouton principal', 'home.cta') + edField('Bouton secondaire', 'home.cta2'))}
+  ${edSection('Bandeau tarif étudiant', edToggle('Afficher', 'home.student.on') + edField('Texte', 'home.student.text', { area: true }))}
+  ${edSection('Qui suis-je', edToggle('Afficher', 'home.about.on') + edField('Titre', 'home.about.title') + edField('Texte', 'home.about.text', { area: true }) +
+    `<div class="row">${h.about.photo ? `<img class="thumb-s" src="${h.about.photo}" alt="">` : ''}<label class="btn btn-sm">${h.about.photo ? 'Changer la photo' : 'Ajouter une photo'}<input type="file" accept="image/*" data-upload="db:home.about.photo" data-max="900" hidden></label>${h.about.photo ? `<button class="link" data-a="imgDel" data-p="home.about.photo">Enlever</button>` : ''}</div>`)}
+  ${edSection('Prestations et prix', edToggle('Afficher', 'home.services.on') + edField('Titre', 'home.services.title') + edField('Note sous les prix', 'home.services.note') + `<p class="small muted">Les prix se changent dans l'onglet Tarifs.</p>`)}
+  ${edSection('Comment ça marche', edToggle('Afficher', 'home.how.on') + edField('Titre', 'home.how.title') + h.how.steps.map((x, i) => `<div class="card line stack"><div class="label">Étape ${i + 1}</div>${edField('Titre', `home.how.steps.${i}.t`)}${edField('Texte', `home.how.steps.${i}.d`)}</div>`).join(''))}
+  ${edSection('Avantages', edToggle('Afficher', 'home.perks.on') + edField('Titre', 'home.perks.title') + `<p class="small muted">Les textes suivent tes réglages de fidélité, parrainage et abonnement.</p>`)}
+  ${edSection('Accès rapide', edToggle('Afficher', 'home.quick.on') + edField('Titre', 'home.quick.title') + edField('Ton téléphone (bouton Appeler)', 'settings.phone', { ph: '06 12 34 56 78' }) + edField('Ton Instagram', 'settings.instagram', { ph: '@tonpseudo' }))}
+  ${edSection('Ils en parlent', edToggle('Afficher', 'home.reviews.on') + edField('Titre', 'home.reviews.title') + `<p class="small muted">Seuls les avis publics de 4★ et plus s'affichent. Tu peux en masquer dans l'onglet Avis.</p>`)}`;
+}
+
+/* Réglages */
+function bSettings(){
+  const s = db.settings;
+  return `<h2 class="h2">Réglages</h2>
+  ${edSection('Lieux', edToggle('Au salon', 'settings.modes.salon') + edToggle('À domicile', 'settings.modes.domicile') + `<p class="small muted">Au moins un des deux doit rester actif.</p>`, true)}
+  ${edSection('Adresse du salon', `<div class="row between"><span class="small">Statut</span><span id="salon-status">${s.salon.validated ? '<span class="pill ok">Validée, visible</span>' : '<span class="pill warn">À valider, cachée</span>'}</span></div>
+    ${edField('Rue et numéro', 'settings.salon.street', { ph: '3 rue de la Liberté' })}<div class="grid2">${edField('Code postal', 'settings.salon.zip')}${edField('Ville', 'settings.salon.city')}</div>${edField('Précisions', 'settings.salon.info', { ph: 'Sonner au 1er' })}
+    <a class="btn btn-sm" style="width:100%" href="${mapsUrl(addrStr(s.salon))}" target="_blank" rel="noopener">Vérifier sur Google Maps</a>
+    <button class="btn btn-gold" data-a="salonValidate">Valider l'adresse</button><p class="tiny muted">L'adresse n'apparaît côté client qu'une fois validée. Si tu la modifies, il faut la revalider.</p>`)}
+  ${edSection('Prestations et durées', s.services.map((x, i) => `<div class="card line stack"><div class="row between"><b>${esc(x.name)}</b><label class="check" style="min-height:0"><input type="checkbox" id="sv-on-${i}" data-set="settings.services.${i}.active" ${x.active ? 'checked' : ''}><span class="small">Active</span></label></div>
+    <div class="grid2">${edField('Nom', `settings.services.${i}.name`)}${edField('Durée (min)', `settings.services.${i}.duration`, { num: true })}</div>${s.services.length > 1 ? `<button class="link" data-a="svcDel" data-i="${i}" style="align-self:flex-end">Supprimer</button>` : ''}</div>`).join('') + `<button class="btn" data-a="svcAdd">+ Ajouter une prestation</button>`)}
+  ${edSection('Déplacement', `<div class="grid2">${edField('Seuil (km)', 'settings.travel.threshold', { num: true })}${edField('Distance max (km)', 'settings.travel.maxKm', { num: true })}</div>${edField('Temps de trajet bloqué autour d\'un rdv à domicile (min)', 'settings.travel.buffer', { num: true })}<p class="small muted">Les frais (${eur(s.travel.near)} / ${eur(s.travel.far)}) se changent dans Tarifs.</p>`)}
+  ${edSection('Fidélité', edToggle('Activer', 'settings.loyalty.on') + `<div class="grid2">${edField('Réduction tous les… rdv', 'settings.loyalty.every', { num: true })}${edField('Réduction (%)', 'settings.loyalty.pct', { num: true })}</div><p class="small muted">Avec 5 : la 6e, la 11e, la 16e coupe… sont réduites. Comptes clients uniquement.</p>`)}
+  ${edSection('Parrainage', edToggle('Activer', 'settings.referral.on') + `<div class="grid2">${edField('Amis nécessaires', 'settings.referral.needed', { num: true })}${edField('Réduction (%)', 'settings.referral.pct', { num: true })}</div><p class="small muted">Fidélité et parrainage ne se cumulent pas : la plus grosse réduction s'applique, l'autre reste pour la fois suivante.</p>`)}
+  ${edSection('Abonnement', edToggle('Activer', 'settings.sub.on') + `<div class="grid2">${edField('Durée (mois)', 'settings.sub.months', { num: true })}${edField('Remise par coupe (€)', 'settings.sub.discount', { num: true })}</div>
+    <div class="stack-s"><span class="small muted">Rythmes proposés</span><div class="chipset">${[1, 2, 3, 4].map(f => `<button class="chip" data-a="freqToggle" data-f="${f}" aria-pressed="${s.sub.freqs.includes(f)}">${f} sem.</button>`).join('')}</div></div>`)}
+  ${edSection('Annulation', edField('Le client peut annuler seul jusqu\'à… heures avant', 'settings.cancelHours', { num: true }))}
+  ${edSection('Moyens de paiement', s.payments.map((p, i) => `<div class="row"><input type="checkbox" id="pay-on-${i}" data-set="settings.payments.${i}.on" ${p.on ? 'checked' : ''} aria-label="Accepter ${esc(p.name)}"><input id="pay-name-${i}" data-set="settings.payments.${i}.name" value="${esc(p.name)}" class="grow"><button class="btn btn-sm btn-ghost" data-a="payDel" data-i="${i}" aria-label="Supprimer">✕</button></div>`).join('') + `<button class="btn" data-a="payAdd">+ Ajouter</button>`)}
+  ${edSection('Heures de rdv', `<label class="field"><span>Un créneau toutes les…</span><select id="set-step" data-set="settings.step" data-num>${[15, 20, 30, 45, 60].map(m => `<option value="${m}" ${+s.step === m ? 'selected' : ''}>${m} min</option>`).join('')}</select></label>
+    <div class="grid2">${edField('Délai mini avant un rdv (h)', 'settings.minNoticeH', { num: true })}${edField('Réservable sur (semaines)', 'settings.aheadWeeks', { num: true })}</div><p class="small muted">Jours et horaires d'ouverture : onglet Dispos.</p>`)}
+  ${edSection('Verrouillage', edToggle('Mettre les réservations en pause', 'settings.locked') + edField('Message affiché aux clients', 'settings.lockMsg', { area: true }) +
+    `<hr class="sep"><p class="small muted">L'espace coiffeur est protégé par ton compte admin (${esc(authUser?.email || '')}).</p><button class="btn" data-a="adminPw">Recevoir un lien pour changer mon mot de passe</button>`)}
+  ${edSection('Sauvegarde', `<p class="small muted">Les données sont enregistrées en ligne (Supabase). Tu peux quand même copier une sauvegarde de temps en temps. « Restaurer » accepte aussi une sauvegarde de l'ancienne version.</p>
+    <button class="btn" data-a="exportData">Copier la sauvegarde</button><textarea id="imp-text" placeholder="Colle ici une sauvegarde pour la restaurer"></textarea><button class="btn" data-a="importData">Restaurer</button>
+    <hr class="sep">${db.demo ? `<button class="btn" data-a="demoClear">Effacer les exemples</button>` : `<button class="btn btn-ghost" data-a="demoLoad">Charger des exemples</button>`}<button class="btn btn-danger" data-a="resetAll">Tout effacer</button>`)}`;
+}
+
+/* Liste d'attente */
+function bWait(){
+  const list = db.waitlist.filter(w => w.date >= today()).sort((a, b) => a.date.localeCompare(b.date));
+  let o = `<h2 class="h2">Liste d'attente</h2><p class="small muted">Quand un rdv est annulé ce jour-là, les clients avec compte sont prévenus automatiquement par message.</p>`;
+  if (!list.length) return o + `<p class="muted">Personne en attente.</p>`;
+  return o + `<div class="list">${list.map(w => { const c = cById(w.clientId); return `<div class="li"><div class="grow"><div class="li-t">${dayShort(w.date)} · ${esc(cName(c))}</div><div class="small muted">${esc(svc(w.serviceId)?.name || '')} · <span class="num">${fmtPhone(c?.phone)}</span>${w.freed ? ' · <b class="gold">place libérée</b>' : ''}</div><div>${w.status === 'waiting' ? '<span class="pill warn">En attente</span>' : w.status === 'notified' ? '<span class="pill ok">Prévenu</span>' : '<span class="pill">Réglé</span>'}</div></div>
+    <div class="stack-s">${c?.hasAccount ? `<button class="btn btn-sm" data-a="waitNotify" data-id="${w.id}">Prévenir</button>` : c ? `<a class="btn btn-sm" target="_blank" rel="noopener" href="sms:${c.phone}">SMS</a>` : ''}<button class="btn btn-sm btn-ghost" data-a="waitDel" data-id="${w.id}">Retirer</button></div></div>`; }).join('')}</div>`;
+}
+
+/* Avis */
+function bReviews(){
+  const all = db.reviews.slice().sort((a, b) => b.at.localeCompare(a.at));
+  let o = `<h2 class="h2">Avis</h2>`;
+  if (!all.length) return o + `<p class="muted">Aucun avis pour l'instant.</p>`;
+  const avg = all.reduce((a, r) => a + r.stars, 0) / all.length;
+  o += `<div class="card stack-s"><div class="row">${stars(avg)}<b class="h2">${fr1(avg)}</b><span class="muted small">${all.length} avis · ${all.filter(r => !r.public).length} privés</span></div>${[5, 4, 3, 2, 1].map(n => { const k = all.filter(r => r.stars === n).length; return `<div class="row small"><span style="width:24px">${n}★</span><div class="bar grow"><i style="width:${k / all.length * 100}%"></i></div><span class="num" style="width:20px">${k}</span></div>`; }).join('')}</div>`;
+  return o + all.map(r => `<div class="card stack-s"><div class="row between">${stars(r.stars)}${r.public ? (r.hidden ? '<span class="pill">Masqué</span>' : '<span class="pill ok">Public</span>') : '<span class="pill warn">Privé</span>'}</div><p>${esc(r.text)}</p><p class="small muted">${esc(r.name)} · ${dayShort(r.at.slice(0, 10))}</p>
+    <div class="row">${r.public ? `<button class="btn btn-sm btn-ghost" data-a="rvHide" data-id="${r.id}">${r.hidden ? 'Réafficher' : 'Masquer'}</button>` : ''}<button class="btn btn-sm btn-ghost" data-a="rvDel" data-id="${r.id}">Supprimer</button></div></div>`).join('');
+}
+
+/* Disponibilités */
+function bDispos(){
+  const s = db.settings, order = [1, 2, 3, 4, 5, 6, 0];
+  const closed = s.closed.filter(d => d >= today()).sort();
+  return `<h2 class="h2">Disponibilités</h2><p class="small muted">Jours ouverts et horaires. Les créneaux se mettent à jour tout de suite côté client.</p>
+    <div class="card stack">${order.map(d => { const c = s.days[d]; return `<div class="stack-s"><label class="toggle-row"><span>${DAYS[d]}</span><input type="checkbox" id="day-${d}" data-set="settings.days.${d}.open" data-rr ${c.open ? 'checked' : ''}></label>
+      ${c.open ? `<div class="timepair"><label class="field"><span>De</span><input type="time" id="day-${d}-s" step="900" data-set="settings.days.${d}.start" value="${c.start}"></label><label class="field"><span>À</span><input type="time" id="day-${d}-e" step="900" data-set="settings.days.${d}.end" value="${c.end}"></label></div>` : ''}</div>`; }).join('<hr class="sep">')}</div>
+    <div class="card stack"><h3 class="h3">Jours de fermeture</h3><p class="small muted">Vacances, jour férié… ces dates passent en « fermé ».</p><div class="row"><input type="date" id="closed-add" min="${today()}" class="grow"><button class="btn btn-sm btn-gold" data-a="closedAdd">Ajouter</button></div>
+    ${closed.length ? `<div class="chipset">${closed.map(d => `<button class="chip" data-a="closedDel" data-d="${d}">${dayShort(d)} ✕</button>`).join('')}</div>` : ''}</div>`;
+}
+
+/* Tarifs */
+function bPrices(){
+  const s = db.settings;
+  return `<h2 class="h2">Tarifs</h2><p class="small muted">Laisse le prix étudiant vide pour ne pas en proposer.</p>
+    ${s.services.map((x, i) => `<div class="card stack"><b class="h3">${esc(x.name)}</b><div class="grid2">${edField('Prix (€)', `settings.services.${i}.price`, { num: true })}<label class="field"><span>Prix étudiant (€)</span><input id="pr-stu-${i}" inputmode="decimal" data-set="settings.services.${i}.student" data-num data-null value="${x.student ?? ''}"></label></div></div>`).join('')}
+    <div class="card stack"><b class="h3">Déplacement</b><div class="grid2">${edField(`Jusqu'à ${s.travel.threshold} km (€)`, 'settings.travel.near', { num: true })}${edField(`Au-delà (€)`, 'settings.travel.far', { num: true })}</div></div>
+    <div class="card stack"><b class="h3">Abonnement</b>${edField('Remise par coupe (€)', 'settings.sub.discount', { num: true })}</div>
+    <p class="small muted">Pour un prix spécial sur un seul rdv, ouvre-le dans l'Agenda et remplis « Imposer un prix ».</p>`;
+}
+
+/* Gains */
+function bGains(){
+  const p = ui.gain, m = today().slice(0, 7);
+  const inP = a => p === 'all' || a.date.slice(0, 7) === m;
+  const live = db.appts.filter(a => a.status !== 'cancelled' && a.status !== 'noshow' && inP(a));
+  const done = live.filter(a => a.status === 'done'), up = live.filter(a => a.status === 'booked');
+  const paid = sum(done.map(apptTotal)), planned = sum(up.map(apptTotal));
+  const by = {}; live.forEach(a => { const k = a.serviceName; by[k] = by[k] || { n: 0, t: 0 }; by[k].n++; by[k].t += apptTotal(a); });
+  const max = Math.max(1, ...Object.values(by).map(x => x.n));
+  const nos = db.appts.filter(a => a.status === 'noshow' && inP(a)).length, canc = db.appts.filter(a => a.status === 'cancelled' && inP(a)).length;
+  return `<h2 class="h2">Gains</h2><div class="chipset"><button class="chip" data-a="gainP" data-p="month" aria-pressed="${p === 'month'}">${MONTHS_L[new Date().getMonth()]}</button><button class="chip" data-a="gainP" data-p="all" aria-pressed="${p === 'all'}">Depuis le début</button></div>
+    <div class="card gold stack-s"><span class="label">Total prévu</span><b class="total">${eur(paid + planned)}</b><span class="small muted">${live.length} rdv</span></div>
+    <div class="grid2"><div class="stat"><span class="label">Encaissé</span><b>${eur(paid)}</b><span class="tiny muted">${done.length} rdv faits</span></div><div class="stat"><span class="label">À venir</span><b>${eur(planned)}</b><span class="tiny muted">${up.length} rdv</span></div>
+    <div class="stat"><span class="label">Panier moyen</span><b>${eur(live.length ? (paid + planned) / live.length : 0)}</b></div><div class="stat"><span class="label">Déplacements</span><b>${eur(sum(live.map(a => a.price?.travel || 0)))}</b></div>
+    <div class="stat"><span class="label">Réductions</span><b>${eur(sum(live.map(a => a.price?.discount || 0)))}</b></div><div class="stat"><span class="label">Annulés · absents</span><b>${canc} · ${nos}</b></div></div>
+    <div class="card stack"><h3 class="h3">Rdv par prestation</h3>${Object.keys(by).length ? Object.entries(by).sort((a, b) => b[1].n - a[1].n).map(([k, v]) => `<div class="stack-s"><div class="row between small"><b>${esc(k)}</b><span class="num">${v.n} rdv · ${eur(v.t)}</span></div><div class="bar"><i style="width:${v.n / max * 100}%"></i></div></div>`).join('') : '<p class="muted small">Aucun rdv sur la période.</p>'}</div>`;
+}
+
+/* ===================== Fenêtre, toast ===================== */
+function openModal(html){ const m = $('#modal'); m.innerHTML = `<div class="sheet" role="dialog" aria-modal="true">${html}</div>`; m.hidden = false; document.body.style.overflow = 'hidden'; }
+function closeModal(){ const m = $('#modal'); m.hidden = true; m.innerHTML = ''; document.body.style.overflow = ''; }
+let toastT;
+function toast(msg, kind = ''){ const t = $('#toast'); t.textContent = msg; t.className = 'toast show ' + kind; clearTimeout(toastT); toastT = setTimeout(() => { t.className = 'toast'; }, 3200); }
+function confirmBox(text, okLabel, fn, sub = ''){
+  pendingConfirm = fn;
+  openModal(`<div class="grab"></div><h3 class="h3">${esc(text)}</h3>${sub ? `<p class="muted small">${esc(sub)}</p>` : ''}<button class="btn btn-danger" data-a="confirmOk">${esc(okLabel)}</button><button class="btn btn-ghost" data-a="closeModal">Retour</button>`);
+}
+function copyText(t){
+  const done = () => toast('Copié');
+  try { navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t)); } catch (e) { fallbackCopy(t); }
+}
+function fallbackCopy(t){
+  openModal(`<div class="grab"></div><h3 class="h3">Copie le texte</h3><p class="small muted">Appuie longuement dans le cadre puis « Tout sélectionner » et « Copier ».</p><textarea id="copy-box" readonly style="min-height:160px">${esc(t)}</textarea><button class="btn" data-a="closeModal">Fermer</button>`);
+  const b = $('#copy-box'); if (b){ b.focus(); b.select(); }
+}
+const fillTpl = (t, c) => t.replace(/\{prenom\}/g, c ? c.first : '');
+function afterLogin(c){
+  ui.auth = { mode: 'login' };
+  if (ui.returnToBook && ui.b){ ui.returnToBook = false; Object.assign(ui.b, { first: c.first, last: c.last, phone: fmtPhone(c.phone) }); ui.tab = 'home'; ui.home = 'book'; }
+  else ui.esp = 'compte';
+  render(); top0(); toast('Salut ' + c.first + ' !');
+}
+
+/* ===================== Actions ===================== */
+const A = {
+  tab(el){ const t = el.dataset.t; if (t === 'home' && ui.tab === 'home') ui.home = 'vitrine'; if (t === 'me' && ui.tab === 'home' && ui.home === 'book' && ui.b?.step === 'done') ui.home = 'vitrine'; ui.tab = t; closeModal(); render(); top0(); },
+  closeModal, confirmOk(){ const f = pendingConfirm; pendingConfirm = null; closeModal(); if (f) return f(); },
+  copy(el){ copyText(el.dataset.t); },
+  slideGo(el){ const car = $('#car'); if (car) car.scrollTo({ left: car.clientWidth * +el.dataset.i, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); },
+  discover(){ const d = $('#decouvrir'); if (d){ const y = d.getBoundingClientRect().top + window.scrollY - 76; window.scrollTo({ top: y, behavior: 'smooth' }); } },
+  book: startBooking,
+  homeBack(){ ui.home = 'vitrine'; ui.b = null; ui.tab = 'home'; render(); top0(); },
+  goStudent(){ ui.tab = 'me'; ui.esp = 'compte'; render(); top0(); if (!me()) toast('Crée ton compte pour envoyer ton justificatif.'); else setTimeout(() => { const x = $$('.h3').find(h => h.textContent === 'Statut étudiant'); x && x.scrollIntoView({ block: 'center' }); }, 30); },
+  contact(){
+    closeModal();
+    if (me()){ ui.tab = 'me'; ui.esp = 'messages'; render(); top0(); return; }
+    const k = ui.contact, b = ui.b;
+    if (b && !k.first){ k.first = b.first; k.phone = b.phone; if (b.tooFar) k.text = `Salut, je suis à ${b.addr.city || b.addr.zip}, est-ce que tu pourrais venir quand même ?`; }
+    openModal(`<div class="grab"></div><h3 class="h2">Écrire au coiffeur</h3><p class="small muted">Laisse ton numéro, il te recontacte. Avec un compte, tu retrouves aussi ses réponses dans Mon espace.</p>
+      <label class="field"><span>Prénom</span><input id="ct-first" data-bind="contact.first" value="${esc(k.first || '')}"></label>
+      <label class="field"><span>Téléphone</span><input id="ct-phone" type="tel" inputmode="tel" data-bind="contact.phone" value="${esc(k.phone || '')}"></label>
+      <label class="field"><span>Message</span><textarea id="ct-text" data-bind="contact.text">${esc(k.text || '')}</textarea></label>
+      <button class="btn btn-gold" data-a="contactSend">Envoyer</button><button class="btn btn-ghost" data-a="closeModal">Annuler</button>`);
+  },
+  async contactSend(){
+    const k = ui.contact;
+    if (!(k.first || '').trim() || normPhone(k.phone).length !== 10 || !(k.text || '').trim()) return toast('Remplis ton prénom, un numéro à 10 chiffres et ton message.', 'bad');
+    try { await callEdge('contact', { data: { first: k.first.trim(), phone: k.phone, text: k.text.trim() } }); } catch (e) { return toast(e.message, 'bad'); }
+    closeModal(); toast('Message envoyé. Réponse au ' + fmtPhone(k.phone) + '.'); ui.contact = {};
+  },
+
+  /* Réservation */
+  bBack(){ const b = ui.b, st = bookSteps(b), i = st.indexOf(b.step); if (i <= 0){ ui.home = 'vitrine'; render(); top0(); return; } b.step = st[i - 1]; render(); top0(); },
+  bSvc(el){ ui.b.svc = el.dataset.id; ui.b.time = null; render(); },
+  bMode(el){ ui.b.mode = el.dataset.m; ui.b.time = null; ui.b.tooFar = false; render(); },
+  bToSalon(){ Object.assign(ui.b, { mode: 'salon', tooFar: false, time: null, step: 'date' }); pickFirstDay(); render(); top0(); },
+  bAddrPick(el){ const c = me(); Object.assign(ui.b.addr, c.addresses[+el.dataset.i]); ui.b.tooFar = false; render(); },
+  bWeek(el){ ui.b.week = Math.max(0, ui.b.week + +el.dataset.d); ui.b.date = null; ui.b.time = null; pickFirstDay(true); render(); },
+  bDay(el){ ui.b.date = el.dataset.d; ui.b.time = null; render(); },
+  bTime(el){ ui.b.time = el.dataset.t; render(); const n = $$('[data-a="bNext"]')[0]; n && n.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); },
+  bPhotoDel(){ ui.b.photo = null; render(); },
+  bFreq(el){ ui.b.freq = +el.dataset.f; render(); },
+  bPay(el){ ui.b.pay = el.dataset.p; render(); },
+  async bNext(){
+    const b = ui.b, s = db.settings, st = bookSteps(b), i = st.indexOf(b.step);
+    if (b.step === 'svc'){
+      if (!b.svc) return toast('Choisis une prestation.', 'bad');
+      if (!b.mode) return toast('Choisis : salon ou domicile.', 'bad');
+      if (b.mode === 'domicile' && !s.modes.domicile) b.mode = 'salon';
+    }
+    if (b.step === 'addr'){
+      const a = b.addr;
+      if (!a.street.trim() || !a.city.trim()) return toast('Indique ta rue et ta ville.', 'bad');
+      const e = estimateKm(a.zip); if (!e) return toast('Le code postal doit avoir 5 chiffres.', 'bad');
+      b.km = e.km; b.tooFar = e.km > s.travel.maxKm;
+      if (b.tooFar){ render(); return; }
+    }
+    if (b.step === 'date' && !b.time) return toast('Choisis un horaire.', 'bad');
+    const nxt = bookSteps(b)[bookSteps(b).indexOf(b.step) + 1];
+    if (!nxt) return;
+    if (nxt === 'date' && busyP) await busyP;
+    b.step = nxt;
+    if (nxt === 'date' && !b.date) pickFirstDay();
+    render(); top0();
+  },
+  bConfirm: () => confirmBooking(),
+  goAuthFromBook(){ ui.returnToBook = true; ui.tab = 'me'; ui.auth.mode = 'register'; render(); top0(); },
+  waitJoin(){
+    const c = me(), b = ui.b;
+    if (c) return addWait(c);
+    ui.wl = { first: b.first, last: b.last, phone: b.phone };
+    openModal(`<div class="grab"></div><h3 class="h2">Liste d'attente</h3><p class="small muted">${dayLong(b.date)} · je t'appelle ou t'envoie un SMS si une place se libère.</p>
+      <div class="grid2"><label class="field"><span>Prénom</span><input id="wl-first" data-bind="wl.first" value="${esc(ui.wl.first)}"></label><label class="field"><span>Nom</span><input id="wl-last" data-bind="wl.last" value="${esc(ui.wl.last)}"></label></div>
+      <label class="field"><span>Téléphone</span><input id="wl-phone" type="tel" inputmode="tel" data-bind="wl.phone" value="${esc(ui.wl.phone)}"></label>
+      <button class="btn btn-gold" data-a="waitSave">M'inscrire</button><button class="btn btn-ghost" data-a="closeModal">Annuler</button>`);
+  },
+  async waitSave(){
+    const w = ui.wl, b = ui.b; if (!(w.first || '').trim() || normPhone(w.phone).length !== 10) return toast('Prénom et numéro à 10 chiffres obligatoires.', 'bad');
+    let r; try { r = await callEdge('attente', { data: { first: w.first.trim(), last: (w.last || '').trim(), phone: w.phone, date: b.date, svc: b.svc } }); } catch (e) { return toast(e.message, 'bad'); }
+    closeModal(); toast(r.result === 'deja' ? 'Tu es déjà sur la liste d\'attente de ce jour.' : 'C\'est noté : je te préviens si une place se libère.');
+  },
+
+  /* Compte client */
+  authMode(el){ ui.auth.mode = el.dataset.m; render(); top0(); },
+  async login(){
+    const a = ui.auth;
+    if (!isEmail(a.id) || !a.pw) return toast('Indique ton e-mail et ton mot de passe.', 'bad');
+    try { await signIn(a.id.trim(), a.pw); } catch (e) { return toast(e.message, 'bad'); }
+    const c = me();
+    if (c) afterLogin(c); else { ui.auth = { mode: 'login' }; render(); top0(); }
+  },
+  async register(){
+    const a = ui.auth;
+    if (!(a.first || '').trim() || !(a.last || '').trim()) return toast('Indique ton prénom et ton nom.', 'bad');
+    if (normPhone(a.phone).length !== 10) return toast('Ton numéro doit avoir 10 chiffres.', 'bad');
+    if (!isEmail(a.email)) return toast('Indique un e-mail valide.', 'bad');
+    if ((a.pw2 || '').length < 8) return toast('Mot de passe : 8 caractères minimum.', 'bad');
+    const email = a.email.trim();
+    try { await signUp(email, a.pw2, a.first, a.last, a.phone); } catch (e) { return toast(e.message, 'bad'); }
+    const c = me();
+    if (c){
+      afterLogin(c);
+      openModal(`<div class="grab"></div><h3 class="h2">Compte créé</h3><p>Tu te connectes avec : <b style="user-select:all">${esc(email)}</b></p><button class="btn btn-gold" data-a="closeModal">C'est noté</button>`);
+    } else {
+      ui.auth = { mode: 'login', id: email }; render(); top0();
+      openModal(`<div class="grab"></div><h3 class="h2">Vérifie tes mails</h3><p>Un lien d'activation a été envoyé à <b>${esc(email)}</b>. Clique dessus, puis connecte-toi.</p><p class="small muted">Pas reçu ? Regarde dans les spams.</p><button class="btn btn-gold" data-a="closeModal">C'est noté</button>`);
+    }
+  },
+  async forgot(){
+    const a = ui.auth;
+    if (!isEmail(a.fid)) return toast('Indique l\'e-mail de ton compte.', 'bad');
+    try { await sendReset(a.fid.trim()); } catch (e) { return toast(e.message, 'bad'); }
+    ui.auth = { mode: 'login', id: a.fid.trim() }; render(); top0();
+    toast('Si ce compte existe, un lien t\'a été envoyé par e-mail.');
+  },
+  async resetPw(){
+    const a = ui.auth;
+    if ((a.fpw || '').length < 8) return toast('Nouveau mot de passe : 8 caractères minimum.', 'bad');
+    const { error } = await sb.auth.updateUser({ password: a.fpw });
+    if (error) return toast(authError(error), 'bad');
+    ui.auth = { mode: 'login' };
+    try { await load(); } catch (e) {}
+    const c = me(); if (c) afterLogin(c); else { render(); top0(); }
+    toast('Mot de passe changé.');
+  },
+  async logout(){
+    await sb.auth.signOut(); setAuth(null); ui.stuProof = null; ui.auth = { mode: 'login' };
+    try { await load(); } catch (e) {}
+    subscribeLive(); render(); top0(); toast('Tu es déconnecté.');
+  },
+  esp(el){
+    ui.esp = el.dataset.v;
+    render(); if (ui.esp === 'messages') window.scrollTo(0, document.body.scrollHeight);
+  },
+  myAppt(el){ const a = db.appts.find(x => x.id === el.dataset.id); if (a) openModal(apptDetailClient(a)); },
+  myCancel(el){
+    const a = db.appts.find(x => x.id === el.dataset.id);
+    confirmBox(`Annuler ton rdv du ${dayLong(a.date)} à ${hTime(a.time)} ?`, 'Oui, annuler', async () => {
+      if ((apptStart(a) - Date.now()) / 3600000 < db.settings.cancelHours) return toast('Trop tard pour annuler toi-même.', 'bad');
+      try { await rpc('annuler_mon_rdv', { p_id: a.id }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+      render(); toast('Rdv annulé.');
+    });
+  },
+  async askCancel(el){
+    const a = db.appts.find(x => x.id === el.dataset.id), c = me(); if (!a || !c) return;
+    try { await rpc('demander_annulation', { p_id: a.id }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+    closeModal(); ui.esp = 'messages'; render(); window.scrollTo(0, document.body.scrollHeight); toast('Demande envoyée au coiffeur.');
+  },
+  async cmSend(){
+    const t = (ui.cmText || '').trim(); if (!t) return toast('Écris ton message.', 'bad');
+    try { await rpc('envoyer_message', { p_texte: t }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+    ui.cmText = ''; render(); window.scrollTo(0, document.body.scrollHeight);
+  },
+  subStop(el){
+    const x = db.subs.find(s => s.id === el.dataset.id);
+    confirmBox('Arrêter ton abonnement ?', 'Oui, arrêter', async () => {
+      let r; try { r = await rpc('arreter_abonnement', { p_id: x.id }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+      const { n, kept } = r; render();
+      toast(`${n} rdv annulés.` + (kept ? ` ${kept} trop proche${kept > 1 ? 's' : ''} : garde${kept > 1 ? 'nt' : ''} ta place.` : ''));
+    }, `Tes rdv à venir de l'abonnement seront annulés, sauf ceux dans moins de ${db.settings.cancelHours} h.`);
+  },
+  stuClear(){ ui.stuProof = null; render(); },
+  async stuSend(){
+    try {
+      const path = await uploadImage('justificatifs', authUser.id + '/' + uid() + '.jpg', ui.stuProof);
+      await rpc('envoyer_justificatif', { p_chemin: path }); await load();
+    } catch (e) { return toast(e.name === 'Error' ? e.message : 'Envoi impossible. Réessaie.', 'bad'); }
+    ui.stuProof = null; render(); toast('Justificatif envoyé.');
+  },
+  rvStar(el){ ui.rv.stars = +el.dataset.n; render(); },
+  rvPub(el){ ui.rv.pub = el.dataset.v === '1'; render(); },
+  async rvSend(){
+    const r = ui.rv; if (!r.stars) return toast('Choisis une note.', 'bad'); if (!r.text.trim()) return toast('Écris quelques mots.', 'bad');
+    try { await rpc('publier_avis', { p_note: r.stars, p_texte: r.text.trim(), p_public: r.pub }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+    ui.rv = { stars: 0, text: '', pub: true }; render(); toast('Merci pour ton avis !');
+  },
+
+  /* Coiffeur : compte admin */
+  async adminLogin(){
+    const a = ui.auth;
+    if (!isEmail(a.aid) || !a.apw) return toast('Indique ton e-mail et ton mot de passe.', 'bad');
+    try { await signIn(a.aid.trim(), a.apw); } catch (e) { return toast(e.message, 'bad'); }
+    a.apw = '';
+    if (!isAdmin){ await A.logout(); return toast('Ce compte n\'a pas accès à l\'espace coiffeur.', 'bad'); }
+    autoComplete(); render(); top0();
+  },
+  async lockBarber(){ await A.logout(); },
+  async adminPw(){
+    try { await sendReset(authUser.email); } catch (e) { return toast(e.message, 'bad'); }
+    toast('Lien envoyé à ' + authUser.email + '.');
+  },
+  bt(el){ ui.bt = el.dataset.t; ui.pf = null; ui.conv = null; render(); top0(); const c = $(`.bchip[data-t="${ui.bt}"]`); c && c.scrollIntoView({ inline: 'center', block: 'nearest' }); },
+  demoClear(){ confirmBox('Effacer les exemples ?', 'Effacer', () => { clearDemo(); save(); render(); toast('Exemples effacés.'); }, 'Tes vrais clients et réglages sont gardés.'); },
+  demoLoad(){ seedDemo(); save(); render(); toast('Exemples chargés.'); },
+  clientMerge(el){
+    confirmBox('Rattacher la fiche sans compte ?', 'Rattacher', async () => {
+      await flush();
+      try { await rpc('fusionner_clients', { p_de: el.dataset.from, p_vers: el.dataset.to }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+      render(); toast('Fiches rattachées.');
+    }, 'Ses rdv, messages, avis et adresses passent sur la fiche avec compte.');
+  },
+
+  /* Agenda */
+  agF(el){ ui.ag = el.dataset.f; render(); },
+  apptEdit(el){ const a = db.appts.find(x => x.id === el.dataset.id); if (a) openModal(apptEditor(a)); },
+  apptSave(el){
+    const a = db.appts.find(x => x.id === el.dataset.id), c = cById(a.clientId);
+    const date = $('#ae-date').value, time = $('#ae-time').value, sid = $('#ae-svc').value, mode = $('#ae-mode').value, status = $('#ae-status').value;
+    const ov = $('#ae-override').value.trim().replace(',', '.');
+    if (!date || !time) return toast('Date et heure obligatoires.', 'bad');
+    if (ov && isNaN(+ov)) return toast('Le prix imposé doit être un nombre.', 'bad');
+    const moved = date !== a.date || time !== a.time, oldD = a.date, oldT = a.time;
+    if (sid !== a.serviceId || mode !== a.mode){
+      const service = svc(sid);
+      Object.assign(a, { serviceId: sid, serviceName: service.name, duration: service.duration, mode });
+      if (mode === 'domicile' && a.km == null) a.km = 0;
+      a.price = computePrice({ service, client: c, mode, km: a.km, sub: !!a.subId, n: c?.hasAccount ? visitsBefore(c.id, date, time, []) + 1 : 0, allowRef: false });
+    }
+    a.date = date; a.time = time; a.override = ov === '' ? null : round(+ov);
+    if (status !== a.status){ if (status === 'cancelled'){ cancelAppt(a, 'barber'); if (c?.hasAccount) addMsg(c.id, 'barber', `Ton rdv du ${dayLong(oldD)} à ${hTime(oldT)} est annulé.`); } else a.status = status; }
+    if (moved && a.status === 'booked' && c?.hasAccount) addMsg(c.id, 'barber', `Ton rdv est déplacé au ${dayLong(date)} à ${hTime(time)}.`);
+    const clash = db.appts.some(x => x.id !== a.id && x.date === a.date && x.status !== 'cancelled' && mins(x.time) < mins(a.time) + a.duration && mins(x.time) + x.duration > mins(a.time));
+    save(); closeModal(); render(); toast(clash ? 'Enregistré. Attention : il chevauche un autre rdv.' : 'Rdv enregistré.', clash ? 'bad' : '');
+  },
+  apptDel(el){ const a = db.appts.find(x => x.id === el.dataset.id); confirmBox('Supprimer ce rdv ?', 'Supprimer', () => { dropFiles('coupes', [a.photo]); if (a.status === 'booked') cancelAppt(a, 'barber'); db.appts = db.appts.filter(x => x !== a); save(); render(); toast('Rdv supprimé.'); }, 'Il disparaît aussi de l\'historique et des gains. Pour garder une trace, mets plutôt le statut « Annulé ».'); },
+  apptNew(){ ui.na = null; openModal(apptNewForm()); },
+  apptCreate(){
+    const d = ui.na, service = svc(d.svc);
+    if (!d.first.trim() || normPhone(d.phone).length !== 10) return toast('Prénom et téléphone à 10 chiffres obligatoires.', 'bad');
+    if (!d.date || !d.time) return toast('Date et heure obligatoires.', 'bad');
+    const c = findOrCreate(d.first, d.last, d.phone);
+    let address = null, km = null;
+    if (d.mode === 'domicile'){ const m = d.addr.match(/^(.*?),?\s*(\d{5})\s*(.*)$/); address = m ? { street: m[1].trim(), zip: m[2], city: m[3].trim(), info: '' } : { street: d.addr, zip: '', city: '', info: '' }; km = (estimateKm(address.zip) || { km: 0 }).km; }
+    const n = c.hasAccount ? visitsBefore(c.id, d.date, d.time) + 1 : 0;
+    db.appts.push({ id: uid(), clientId: c.id, serviceId: service.id, serviceName: service.name, duration: service.duration, mode: d.mode, address, km, date: d.date, time: d.time, photo: null, detail: '', subId: null, refCode: null, payment: '',
+      price: computePrice({ service, client: c, mode: d.mode, km, sub: false, n, allowRef: false }), override: null, status: 'booked', seen: true, createdAt: new Date().toISOString(), byBarber: true });
+    if (address && address.street && !c.addresses.some(x => x.street === address.street)) c.addresses.push(address);
+    if (c.hasAccount) addMsg(c.id, 'barber', `Je t'ai réservé : ${service.name}, ${dayLong(d.date)} à ${hTime(d.time)}.`);
+    save(); closeModal(); render(); toast('Rdv créé.');
+  },
+  openWallet(el){ closeModal(); ui.tab = 'barber'; ui.bt = 'portefeuille'; ui.pf = el.dataset.id; render(); top0(); },
+  pfBack(){ ui.pf = null; render(); top0(); },
+  pfSend(el){ const c = cById(el.dataset.id), t = ($('#pf-msg').value || '').trim(); if (!t) return toast('Écris ton message.', 'bad'); addMsg(c.id, 'barber', t); save(); toast('Message envoyé à ' + c.first + '.'); $('#pf-msg').value = ''; },
+  clientDel(el){ const c = cById(el.dataset.id); confirmBox(`Supprimer ${cName(c)} ?`, 'Supprimer définitivement', () => {
+    dropFiles('coupes', db.appts.filter(a => a.clientId === c.id).map(a => a.photo)); dropFiles('justificatifs', [c.student?.proof]);
+    db.clients = db.clients.filter(x => x !== c); ['appts', 'messages', 'waitlist', 'subs'].forEach(k => { db[k] = db[k].filter(x => x.clientId !== c.id); }); db.reviews = db.reviews.filter(x => x.clientId !== c.id);
+    ui.pf = null; save(); render(); toast('Fiche supprimée.'); }, 'Ses rdv, messages, avis, photos et son compte (e-mail et mot de passe) sont effacés.'); },
+
+  /* Étudiants */
+  stuOk(el){ const c = cById(el.dataset.id); dropFiles('justificatifs', [c.student?.proof]); c.student = { status: 'ok', date: new Date().toISOString() }; addMsg(c.id, 'barber', `C'est validé ${c.first} : tes prix étudiants s'appliquent maintenant automatiquement.`); save(); render(); toast('Statut étudiant validé.'); },
+  stuRefuse(el){ ui.rf = el.dataset.id; openModal(`<div class="grab"></div><h3 class="h2">Refuser</h3><label class="field"><span>Motif (le client le verra)</span><textarea id="rf-reason" placeholder="Ex. : justificatif illisible ou pas de cette année"></textarea></label><button class="btn btn-danger" data-a="stuRefuseOk">Refuser la demande</button><button class="btn btn-ghost" data-a="closeModal">Retour</button>`); },
+  stuRefuseOk(){ const c = cById(ui.rf), r = ($('#rf-reason').value || '').trim(); if (!r) return toast('Indique un motif.', 'bad'); dropFiles('justificatifs', [c.student?.proof]); c.student = { status: 'refused', reason: r, date: new Date().toISOString() }; addMsg(c.id, 'barber', `Ton justificatif étudiant n'a pas été accepté : ${r}. Tu peux en renvoyer un depuis Mon espace.`); save(); closeModal(); render(); },
+  stuRevoke(el){ const c = cById(el.dataset.id); confirmBox(`Retirer le statut étudiant de ${c.first} ?`, 'Retirer', () => { c.student = { status: 'none' }; save(); render(); }); },
+
+  /* Messages coiffeur */
+  convOpen(el){ ui.conv = el.dataset.id; ui.bmText = ''; render(); window.scrollTo(0, document.body.scrollHeight); },
+  convBack(){ ui.conv = null; render(); top0(); },
+  bmSend(el){ const t = (ui.bmText || '').trim(); if (!t) return toast('Écris ta réponse.', 'bad'); addMsg(el.dataset.id, 'barber', t); ui.bmText = ''; save(); render(); window.scrollTo(0, document.body.scrollHeight); },
+  bCancelAppt(el){
+    const a = db.appts.find(x => x.id === el.dataset.id), c = cById(a.clientId);
+    confirmBox(`Annuler le rdv du ${dayShort(a.date)} à ${hTime(a.time)} ?`, 'Annuler le rdv', () => {
+      cancelAppt(a, 'barber'); db.messages.forEach(m => { if (m.apptId === a.id) m.handled = true; });
+      addMsg(c.id, 'barber', `C'est bon ${c.first}, ton rdv du ${dayLong(a.date)} à ${hTime(a.time)} est annulé.`); save(); render(); toast('Rdv annulé, client prévenu.');
+    });
+  },
+  tplUse(el){ const c = cById(el.dataset.c), t = $('#' + el.dataset.target); if (!t) return; t.value = fillTpl(db.templates[+el.dataset.i], c); t.dispatchEvent(new Event('input', { bubbles: true })); t.focus(); },
+  tplAdd(){ db.templates.push('Salut {prenom}, '); save(); render(); },
+  tplDel(el){ db.templates.splice(+el.dataset.i, 1); save(); render(); },
+  composeTo(el){ const c = cById(el.dataset.id); openModal(`<div class="grab"></div><h3 class="h2">Écrire à ${esc(c.first)}</h3><div class="chipset">${db.templates.map((t, i) => `<button class="chip" data-a="tplUse" data-i="${i}" data-target="cp-text" data-c="${c.id}">${esc(t.slice(0, 22))}…</button>`).join('')}</div><textarea id="cp-text" placeholder="Ton message…"></textarea><button class="btn btn-gold" data-a="composeSend" data-id="${c.id}">Envoyer</button><button class="btn btn-ghost" data-a="closeModal">Annuler</button>`); },
+  composeSend(el){ const t = ($('#cp-text').value || '').trim(); if (!t) return toast('Écris ton message.', 'bad'); addMsg(el.dataset.id, 'barber', t); save(); closeModal(); toast('Message envoyé.'); },
+  pwReset(el){
+    const c = cById(el.dataset.id); if (!c.email) return toast('Ce client n\'a pas d\'e-mail.', 'bad');
+    confirmBox(`Envoyer à ${cName(c)} un lien pour changer son mot de passe ?`, 'Envoyer le lien', async () => {
+      try { await sendReset(c.email); } catch (e) { return toast(e.message, 'bad'); }
+      toast('Lien envoyé à ' + c.email + '.');
+    }, 'Il le reçoit par e-mail et choisit lui-même son nouveau mot de passe.');
+  },
+
+  /* Accueil et réglages */
+  imgDel(el){ setPath(db, el.dataset.p, null); save(); render(); },
+  slideAdd(){ if (db.home.slides.length >= 4) return; db.home.slides.push({ img: null, caption: '' }); save(); render(); },
+  slideDel(el){ db.home.slides.splice(+el.dataset.i, 1); save(); render(); },
+  slideMove(el){ const i = +el.dataset.i, j = i + +el.dataset.d, s = db.home.slides; if (j < 0 || j >= s.length) return; [s[i], s[j]] = [s[j], s[i]]; save(); render(); },
+  salonValidate(){ const s = db.settings.salon; if (!s.street.trim() || !/^\d{5}$/.test(s.zip) || !s.city.trim()) return toast('Remplis la rue, un code postal à 5 chiffres et la ville.', 'bad'); s.validated = true; save(); render(); toast('Adresse validée, visible par les clients.'); },
+  svcAdd(){ db.settings.services.push({ id: 'p' + uid(), name: 'Nouvelle prestation', price: 10, student: null, duration: 30, active: false }); save(); render(); toast('Ajoutée (inactive). Règle-la puis active-la.'); },
+  svcDel(el){ const i = +el.dataset.i, x = db.settings.services[i]; confirmBox(`Supprimer « ${x.name} » ?`, 'Supprimer', () => { db.settings.services.splice(i, 1); save(); render(); }, 'Les rdv déjà pris gardent leur prestation.'); },
+  payAdd(){ db.settings.payments.push({ name: 'Autre', on: true }); save(); render(); },
+  payDel(el){ db.settings.payments.splice(+el.dataset.i, 1); save(); render(); },
+  freqToggle(el){ const f = +el.dataset.f, a = db.settings.sub.freqs; const i = a.indexOf(f); if (i >= 0){ if (a.length === 1) return toast('Garde au moins un rythme.', 'bad'); a.splice(i, 1); } else { a.push(f); a.sort(); } save(); render(); },
+  closedAdd(){ const v = $('#closed-add').value; if (!v) return toast('Choisis une date.', 'bad'); if (!db.settings.closed.includes(v)) db.settings.closed.push(v); save(); render(); },
+  closedDel(el){ db.settings.closed = db.settings.closed.filter(d => d !== el.dataset.d); save(); render(); },
+  exportData(){ copyText(JSON.stringify(db)); },
+  importData(){
+    let d; try { d = JSON.parse($('#imp-text').value); } catch (e) { return toast('Ce texte n\'est pas une sauvegarde valide.', 'bad'); }
+    if (!d || !d.settings || !Array.isArray(d.appts)) return toast('Ce texte n\'est pas une sauvegarde valide.', 'bad');
+    confirmBox('Remplacer toutes les données par cette sauvegarde ?', 'Restaurer', () => { db = fill(defaults(), adaptBackup(d)); save(); render(); toast('Sauvegarde restaurée.'); });
+  },
+  resetAll(){ confirmBox('Tout effacer ?', 'Tout effacer', () => { db = defaults(); save(); render(); toast('Tout est effacé.'); }, 'Clients, rdv, messages, réglages et page d\'accueil reviennent à zéro.'); },
+  waitNotify(el){ const w = db.waitlist.find(x => x.id === el.dataset.id), c = cById(w.clientId); addMsg(c.id, 'barber', `Salut ${c.first}, une place s'est libérée le ${dayLong(w.date)}. Réserve vite depuis l'accueil !`); w.status = 'notified'; save(); render(); toast(c.first + ' est prévenu.'); },
+  waitDel(el){ db.waitlist = db.waitlist.filter(x => x.id !== el.dataset.id); save(); render(); },
+  rvHide(el){ const r = db.reviews.find(x => x.id === el.dataset.id); r.hidden = !r.hidden; save(); render(); },
+  rvDel(el){ confirmBox('Supprimer cet avis ?', 'Supprimer', () => { db.reviews = db.reviews.filter(x => x.id !== el.dataset.id); save(); render(); }); },
+  gainP(el){ ui.gain = el.dataset.p; render(); }
+};
+function pickFirstDay(thisWeekOnly){
+  const b = ui.b, service = svc(b.svc);
+  const last = thisWeekOnly ? b.week : db.settings.aheadWeeks - 1;
+  for (let w = b.week; w <= last; w++){
+    const st = weekStart(w);
+    for (let i = 0; i < 7; i++){ const d = addDays(st, i); if (dayStatus(d, service.duration, b.mode) === 'open'){ b.week = w; b.date = d; return; } }
+  }
+  b.date = null;
+}
+async function addWait(c){
+  const b = ui.b;
+  let r; try { r = await rpc('rejoindre_attente', { p_date: b.date, p_prestation: b.svc }); await load(); } catch (e) { return toast(e.message, 'bad'); }
+  toast(r === 'deja' ? 'Tu es déjà sur la liste d\'attente de ce jour.' : 'C\'est noté : je te préviens si une place se libère.');
+}
+// Sauvegarde de l'ancienne version (localStorage) : identifiants convertis en UUID,
+// comptes transformés en fiches sans compte (le client recrée son compte par e-mail,
+// puis tu rattaches sa fiche depuis le Portefeuille).
+function adaptBackup(d){
+  const isU = v => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(v));
+  const m = new Map(), id = v => v == null || v === '' ? null : isU(v) ? v : (m.has(v) ? m.get(v) : (m.set(v, uid()), m.get(v)));
+  if (d.settings) delete d.settings.pin;
+  d.clients = (d.clients || []).map(c => { const o = { ...c, id: id(c.id), userId: isU(c.userId) ? c.userId : null }; delete o.pw; delete o.login;
+    if (!o.userId && !o.demo) o.hasAccount = false; return o; });
+  const known = new Set(d.clients.map(c => c.id)), ok = x => known.has(x.clientId);
+  d.subs = (d.subs || []).map(x => ({ ...x, id: id(x.id), clientId: id(x.clientId) })).filter(ok);
+  const subs = new Set(d.subs.map(x => x.id));
+  d.appts = (d.appts || []).map(a => ({ ...a, id: id(a.id), clientId: id(a.clientId), subId: subs.has(id(a.subId)) ? id(a.subId) : null })).filter(ok);
+  const appts = new Set(d.appts.map(a => a.id));
+  d.messages = (d.messages || []).map(x => ({ ...x, id: id(x.id), clientId: id(x.clientId), apptId: appts.has(id(x.apptId)) ? id(x.apptId) : null })).filter(ok);
+  d.reviews = (d.reviews || []).map(x => ({ ...x, id: id(x.id), clientId: id(x.clientId) })).filter(x => !x.clientId || known.has(x.clientId));
+  d.waitlist = (d.waitlist || []).map(x => ({ ...x, id: id(x.id), clientId: id(x.clientId) })).filter(ok);
+  return d;
+}
+
+/* ===================== Événements ===================== */
+function readVal(el){
+  if (el.type === 'checkbox') return el.checked;
+  if ('num' in el.dataset || el.type === 'number'){
+    const v = String(el.value).trim().replace(',', '.');
+    if (v === '') return 'null' in el.dataset ? null : 0;
+    const n = parseFloat(v); return isNaN(n) ? 0 : n;
+  }
+  return el.value;
+}
+function onSet(path){
+  if (path.startsWith('settings.salon.') && db.settings.salon.validated){
+    db.settings.salon.validated = false;
+    const s = $('#salon-status'); if (s) s.innerHTML = '<span class="pill warn">À valider, cachée</span>';
+  }
+  if (path.startsWith('settings.modes.') && !db.settings.modes.salon && !db.settings.modes.domicile){ setPath(db, path, true); toast('Garde au moins un lieu actif.', 'bad'); return true; }
+}
+let inFlight = false;
+function runAction(fn, el, e){
+  if (inFlight) return;
+  const r = fn(el, e);
+  if (r && typeof r.then === 'function'){ inFlight = true; document.body.style.cursor = 'progress'; r.catch(err => { console.error(err); toast('Connexion impossible. Réessaie.', 'bad'); }).finally(() => { inFlight = false; document.body.style.cursor = ''; }); }
+}
+document.addEventListener('click', e => {
+  if (e.target.id === 'modal'){ closeModal(); return; }
+  const el = e.target.closest('[data-a]'); if (!el || el.disabled) return;
+  const fn = A[el.dataset.a]; if (!fn) return;
+  e.preventDefault(); runAction(fn, el, e);
+});
+document.addEventListener('submit', e => { const f = e.target.closest('form[data-submit]'); if (!f) return; e.preventDefault(); const fn = A[f.dataset.submit]; fn && runAction(fn, f, e); });
+let setT;
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.bind && el.type !== 'checkbox' && el.tagName !== 'SELECT') setPath(ui, el.dataset.bind, el.value);
+  if (el.dataset.set && el.type !== 'checkbox' && el.tagName !== 'SELECT'){
+    setPath(db, el.dataset.set, readVal(el)); onSet(el.dataset.set);
+    clearTimeout(setT); setT = setTimeout(save, 250);
+  }
+  if (el.id === 'pf-q'){ ui.pfq = el.value; const l = $('#pf-list'); if (l) l.innerHTML = pfList(); }
+});
+document.addEventListener('change', async e => {
+  const el = e.target;
+  if (el.dataset.upload){
+    const f = el.files && el.files[0]; if (!f) return;
+    try {
+      const url = await readImage(f, +el.dataset.max || 1000, 0.72);
+      const i = el.dataset.upload.indexOf(':'), root = el.dataset.upload.slice(0, i), path = el.dataset.upload.slice(i + 1);
+      if (root === 'db'){
+        if (!isAdmin) return;
+        let pub;
+        try { const name = await uploadImage('vitrine', uid() + '.jpg', url); pub = sb.storage.from('vitrine').getPublicUrl(name).data.publicUrl; }
+        catch (err){ return toast('Envoi de la photo impossible. Réessaie.', 'bad'); }
+        setPath(db, path, pub); save();
+      }
+      else setPath(ui, path, url);
+      render();
+    } catch (err){ toast('Impossible de lire cette image. Essaie une capture d\'écran.', 'bad'); }
+    return;
+  }
+  if (el.dataset.bind && (el.type === 'checkbox' || el.tagName === 'SELECT')){ setPath(ui, el.dataset.bind, readVal(el)); if ('rr' in el.dataset) render(); }
+  if (el.dataset.set && (el.type === 'checkbox' || el.tagName === 'SELECT')){
+    setPath(db, el.dataset.set, readVal(el)); const reverted = onSet(el.dataset.set); save();
+    if (reverted) el.checked = true;
+    if ('rr' in el.dataset) render();
+  }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#modal').hidden) closeModal(); });
+
+/* ===================== Démarrage ===================== */
+document.documentElement.lang = 'fr';
+const h0 = (location.hash || '').slice(1);
+if (h0 === 'coiffeur') ui.tab = 'barber'; else if (h0 === 'espace') ui.tab = 'me';
+(async () => {
+  if (!sb){ db = defaults(); render(); toast('Configuration manquante : crée config.js (voir le README).', 'bad'); return; }
+  sb.auth.onAuthStateChange((event, session) => {
+    const before = authUser?.id;
+    setAuth(session);
+    // Retour depuis le lien « mot de passe oublié » reçu par e-mail.
+    if (event === 'PASSWORD_RECOVERY') setTimeout(() => { ui.tab = 'me'; ui.auth = { mode: 'reset' }; closeModal(); render(); top0(); }, 0);
+    // Déconnexion depuis un autre onglet.
+    if (event === 'SIGNED_OUT' && before) setTimeout(async () => { try { await load(); } catch (e) {} subscribeLive(); render(); }, 0);
+  });
+  const { data: { session } } = await sb.auth.getSession();
+  setAuth(session);
+  try { await load(); } catch (e) { console.error(e); db = db || defaults(); toast('Connexion au serveur impossible. Réessaie plus tard.', 'bad'); }
+  autoComplete();
+  render();
+  subscribeLive();
+})();
+setInterval(() => { if (!db) return; const before = JSON.stringify(db.appts.map(a => a.status)); autoComplete(); if (before !== JSON.stringify(db.appts.map(a => a.status))) render(); }, 60000);
+</script>
+
+</body>
+</html>
